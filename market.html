@@ -2,59 +2,97 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>本日の買取価格 | 株式会社Go</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本日の金・プラチナ・パラジウム買取価格</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .price {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .change {
+      font-size: 1.2rem;
+      margin-left: 1rem;
+    }
+    .gold { color: gold; }
+    .platinum { color: silver; }
+    .palladium { color: #60d0ff; }
+    .negative { color: #f66; }
+    .positive { color: #6f6; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    td {
+      border: 1px solid #444;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+    td:first-child {
+      font-weight: bold;
+      width: 40%;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>本日の買取価格</h1>
-        <p class="update">2025年7月28日 更新</p>
-    </header>
-    <main>
-        <section class="price-cards">
-            <div class="card gold">
-                <h2>金</h2>
-                <p class="value">17,295円/g</p>
-                <p class="change down">前日比 -143円</p>
-            </div>
-            <div class="card platinum">
-                <h2>プラチナ</h2>
-                <p class="value">7,287円/g</p>
-                <p class="change down">前日比 -12円</p>
-            </div>
-            <div class="card palladium">
-                <h2>パラジウム</h2>
-                <p class="value">5,961円/g</p>
-                <p class="change up">前日比 +10円</p>
-            </div>
-        </section>
+  <h1>本日の金・プラチナ・パラジウム買取価格</h1>
 
-        <section class="tables">
-            <div class="table-section">
-                <h3>金の買取価格（税込）</h3>
-                <table>
-                    <tr><td>K24</td><td>16,951円</td></tr>
-                    <tr><td>K22</td><td>15,359円</td></tr>
-                    <tr><td>K18</td><td>12,971円</td></tr>
-                    <tr><td>K14</td><td>9,516円</td></tr>
-                    <tr><td>K10</td><td>6,746円</td></tr>
-                </table>
-            </div>
-            <div class="table-section">
-                <h3>プラチナの買取価格（税込）</h3>
-                <table>
-                    <tr><td>PT1000</td><td>7,143円</td></tr>
-                    <tr><td>PT950</td><td>6,779円</td></tr>
-                    <tr><td>PT900</td><td>6,975円</td></tr>
-                    <tr><td>PT850</td><td>6,610円</td></tr>
-                </table>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>© 2025 株式会社Go</p>
-    </footer>
+  <div class="card">
+    <div class="title gold">金価格</div>
+    <div><span class="price">17,295円/g</span><span class="change negative">-143円</span></div>
+  </div>
+
+  <div class="card">
+    <div class="title platinum">プラチナ価格</div>
+    <div><span class="price">7,287円/g</span><span class="change negative">-12円</span></div>
+  </div>
+
+  <div class="card">
+    <div class="title palladium">パラジウム価格</div>
+    <div><span class="price">5,961円/g</span><span class="change positive">+10円</span></div>
+  </div>
+
+  <div class="card">
+    <div class="title">金地金買取価格一覧</div>
+    <table>
+      <tr><td>K24</td><td>16,951円</td></tr>
+      <tr><td>K18</td><td>12,971円</td></tr>
+      <tr><td>K14</td><td>9,516円</td></tr>
+      <tr><td>K10</td><td>6,746円</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="title">プラチナ地金買取価格一覧</div>
+    <table>
+      <tr><td>Pt1000</td><td>7,143円</td></tr>
+      <tr><td>Pt900</td><td>6,975円</td></tr>
+      <tr><td>Pt850</td><td>6,610円</td></tr>
+    </table>
+  </div>
 </body>
 </html>
