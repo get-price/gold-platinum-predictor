@@ -1,0 +1,44 @@
+
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: 'Helvetica Neue', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+header {
+  padding: 2rem 1rem;
+}
+nav a {
+  margin: 0 1rem;
+  color: #fff;
+  text-decoration: none;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+main {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+.card {
+  background: #222;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  max-width: 500px;
+}
+.card h2 {
+  margin-bottom: 1rem;
+}
+.card .note {
+  margin-top: 1rem;
+  color: #aaa;
+}
+footer {
+  margin-top: 3rem;
+  font-size: 0.8rem;
+  color: #555;
+}
