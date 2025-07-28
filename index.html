@@ -4,24 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金・プラチナ価格予測</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>本日の金・プラチナ取引価格</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            padding: 2rem 1rem 1rem;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+        .updated {
+            font-size: 1rem;
+            color: #bbb;
+            margin-bottom: 2rem;
+        }
+        .price-boxes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 0 auto 2rem;
+            max-width: 700px;
+        }
+        .price-box {
+            background: #222;
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            width: 280px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .price-box h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .diff-up {
+            color: #0f0;
+            font-size: 1.2rem;
+        }
+        .diff-down {
+            color: #f33;
+            font-size: 1.2rem;
+        }
+        .note {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin: 1rem auto;
+            max-width: 700px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>金・プラチナ価格予測</h1>
-        <p class="subheading">AIによる翌営業日の価格を予測</p>
-    </header>
-    <main>
-        <section class="card">
-            <h2>2025年7月29日（火）予測</h2>
-            <p>🟡 金：<strong>17,305円/g</strong></p>
-            <p>⚪️ プラチナ：<strong>7,291円/g</strong></p>
-            <p class="note">※参考価格です。実際の価格は相場によって変動します。</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 株式会社Go</p>
-    </footer>
+    <header>本日の金・プラチナ取取価格</header>
+    <div class="updated">（2025年7月28日 更新）</div>
+    <div class="price-boxes">
+        <div class="price-box">
+            <h2>金買取価格</h2>
+            <div class="price">17,295円/g</div>
+            <div class="diff-down">-143円</div>
+        </div>
+        <div class="price-box">
+            <h2>プラチナ買取価格</h2>
+            <div class="price">7,287円/g</div>
+            <div class="diff-down">-12円</div>
+        </div>
+        <div class="price-box">
+            <h2>パラジウム買取価格</h2>
+            <div class="price">5,961円/g</div>
+            <div class="diff-up">+10円</div>
+        </div>
+    </div>
+    <div class="note">※業者様専用の価格表です。実際の価格は相場によって変動します。</div>
 </body>
 </html>
