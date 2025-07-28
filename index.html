@@ -2,40 +2,26 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>翌日の金・プラチナ価格予測</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AIによる金・プラチナ価格の翌日予測。参考価格としてご活用ください。">
-  <style>
-    body {
-      margin: 0;
-      background: #111;
-      color: #eee;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      padding: 2rem;
-      line-height: 1.8;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .price-box {
-      background: #222;
-      border-radius: 1rem;
-      padding: 1rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金・プラチナ価格予測</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>翌日の金・プラチナ価格予測</h1>
-  <div class="price-box">
-    <strong>📅 2025年7月29日（火）</strong><br>
-    金価格：<strong>17,305円/g（予測）</strong><br>
-    プラチナ価格：<strong>7,291円/g（予測）</strong><br>
-    ※参考価格です。売買の最終判断はご自身でお願いいたします。
-  </div>
-  <p>本サービスはAIにより日々の価格変動を分析し、翌営業日の買取価格を予測しています。</p>
+    <header>
+        <h1>金・プラチナ価格予測</h1>
+        <p class="subheading">AIによる翌営業日の価格を予測</p>
+    </header>
+    <main>
+        <section class="card">
+            <h2>2025年7月29日（火）予測</h2>
+            <p>🟡 金：<strong>17,305円/g</strong></p>
+            <p>⚪️ プラチナ：<strong>7,291円/g</strong></p>
+            <p class="note">※参考価格です。実際の価格は相場によって変動します。</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 株式会社Go</p>
+    </footer>
 </body>
 </html>
