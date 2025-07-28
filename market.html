@@ -29,19 +29,22 @@
       font-size: 1.25rem;
       margin-bottom: 0.75rem;
     }
-    .price {
-      font-size: 2rem;
-      font-weight: bold;
+    .price-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    .change {
-      font-size: 1.2rem;
-      margin-left: 1rem;
+    .label {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .price {
+      font-size: 1.6rem;
+      font-weight: bold;
     }
     .gold { color: gold; }
     .platinum { color: silver; }
     .palladium { color: #60d0ff; }
-    .negative { color: #f66; }
-    .positive { color: #6f6; }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -56,6 +59,12 @@
       font-weight: bold;
       width: 40%;
     }
+    .note {
+      font-size: 0.8rem;
+      text-align: center;
+      color: #888;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -63,36 +72,28 @@
 
   <div class="card">
     <div class="title gold">金価格</div>
-    <div><span class="price">17,295円/g</span><span class="change negative">-143円</span></div>
+    <div class="price-group">
+      <div><span class="label">業者向け:</span> <span class="price">17,295円/g</span></div>
+      <div><span class="label">一般向け:</span> <span class="price">16,776円/g</span></div>
+    </div>
   </div>
 
   <div class="card">
     <div class="title platinum">プラチナ価格</div>
-    <div><span class="price">7,287円/g</span><span class="change negative">-12円</span></div>
+    <div class="price-group">
+      <div><span class="label">業者向け:</span> <span class="price">7,287円/g</span></div>
+      <div><span class="label">一般向け:</span> <span class="price">7,068円/g</span></div>
+    </div>
   </div>
 
   <div class="card">
     <div class="title palladium">パラジウム価格</div>
-    <div><span class="price">5,961円/g</span><span class="change positive">+10円</span></div>
+    <div class="price-group">
+      <div><span class="label">業者向け:</span> <span class="price">5,961円/g</span></div>
+      <div><span class="label">一般向け:</span> <span class="price">5,782円/g</span></div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="title">金地金買取価格一覧</div>
-    <table>
-      <tr><td>K24</td><td>16,951円</td></tr>
-      <tr><td>K18</td><td>12,971円</td></tr>
-      <tr><td>K14</td><td>9,516円</td></tr>
-      <tr><td>K10</td><td>6,746円</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <div class="title">プラチナ地金買取価格一覧</div>
-    <table>
-      <tr><td>Pt1000</td><td>7,143円</td></tr>
-      <tr><td>Pt900</td><td>6,975円</td></tr>
-      <tr><td>Pt850</td><td>6,610円</td></tr>
-    </table>
-  </div>
+  <div class="note">※一般向け価格は業者向け価格の3%減で算出しています（2025年7月28日 現在）</div>
 </body>
 </html>
