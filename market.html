@@ -2,53 +2,59 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>本日の買取価格</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本日の買取価格 | 株式会社Go</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>本日の買取価格</h1>
-    <nav>
-      <a href="index.html">翌日予測</a>
-      <a href="market.html" class="active">本日の相場</a>
-    </nav>
-  </header>
-  <main>
-    <section class="card">
-      <h2>買取価格（2025年7月28日更新）</h2>
-      <div class="price-cards">
-        <div class="price-box gold">
-          <h3>金（Gold）</h3>
-          <p class="main-price">17,295円/g</p>
-          <p class="sub">前日比：-143円</p>
-        </div>
-        <div class="price-box platinum">
-          <h3>プラチナ（Platinum）</h3>
-          <p class="main-price">7,287円/g</p>
-          <p class="sub">前日比：-12円</p>
-        </div>
-        <div class="price-box palladium">
-          <h3>パラジウム（Palladium）</h3>
-          <p class="main-price">5,961円/g</p>
-          <p class="sub">前日比：+10円</p>
-        </div>
-      </div>
-      <div class="table-wrapper">
-        <h3>地金別価格一覧</h3>
-        <table>
-          <tr><th>種類</th><th>買取価格</th></tr>
-          <tr><td>K24</td><td>17,295円/g</td></tr>
-          <tr><td>K18</td><td>13,000円/g</td></tr>
-          <tr><td>Pt900</td><td>6,800円/g</td></tr>
-          <tr><td>Pt850</td><td>6,500円/g</td></tr>
-          <tr><td>パラジウム</td><td>5,961円/g</td></tr>
-        </table>
-      </div>
-      <p class="note">※参考価格です。実際の価格は日々の相場により変動します。</p>
-    </section>
-  </main>
-  <footer>© 2025 株式会社Go</footer>
+    <header>
+        <h1>本日の買取価格</h1>
+        <p class="update">2025年7月28日 更新</p>
+    </header>
+    <main>
+        <section class="price-cards">
+            <div class="card gold">
+                <h2>金</h2>
+                <p class="value">17,295円/g</p>
+                <p class="change down">前日比 -143円</p>
+            </div>
+            <div class="card platinum">
+                <h2>プラチナ</h2>
+                <p class="value">7,287円/g</p>
+                <p class="change down">前日比 -12円</p>
+            </div>
+            <div class="card palladium">
+                <h2>パラジウム</h2>
+                <p class="value">5,961円/g</p>
+                <p class="change up">前日比 +10円</p>
+            </div>
+        </section>
+
+        <section class="tables">
+            <div class="table-section">
+                <h3>金の買取価格（税込）</h3>
+                <table>
+                    <tr><td>K24</td><td>16,951円</td></tr>
+                    <tr><td>K22</td><td>15,359円</td></tr>
+                    <tr><td>K18</td><td>12,971円</td></tr>
+                    <tr><td>K14</td><td>9,516円</td></tr>
+                    <tr><td>K10</td><td>6,746円</td></tr>
+                </table>
+            </div>
+            <div class="table-section">
+                <h3>プラチナの買取価格（税込）</h3>
+                <table>
+                    <tr><td>PT1000</td><td>7,143円</td></tr>
+                    <tr><td>PT950</td><td>6,779円</td></tr>
+                    <tr><td>PT900</td><td>6,975円</td></tr>
+                    <tr><td>PT850</td><td>6,610円</td></tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 株式会社Go</p>
+    </footer>
 </body>
 </html>
