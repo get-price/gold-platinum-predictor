@@ -3,10 +3,80 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>宮善貴金属</title>
+    <title>翌日のAI相場予想 - 宮善貴金属</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Helvetica Neue', sans-serif;
+            text-align: center;
+            padding: 2rem;
+        }
+        header img {
+            width: 160px;
+            margin-bottom: 1rem;
+        }
+        nav {
+            margin-bottom: 2rem;
+        }
+        nav a {
+            display: inline-block;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #fff;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #fff;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 1rem 0 0.5rem;
+        }
+        .date {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        .price-box {
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border: 2px solid #888;
+            width: fit-content;
+            text-align: left;
+        }
+        .price-box p {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+        .up { color: #00ff99; }
+        .down { color: #ff4444; }
+        .note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+    </style>
 </head>
-<body style="background-color:#000; color:#fff; text-align:center; padding-top:50px;">
-    <img src="img/miyazen_logo.png" alt="宮善貴金属のロゴ" width="200">
-    <h1>ようこそ、宮善貴金属へ</h1>
+<body>
+    <header>
+        <img src="img/logo.png" alt="宮善貴金属ロゴ">
+    </header>
+    <nav>
+        <a href="#">翌日の相場予想</a>
+        <a href="#">本日の買取相場</a>
+        <a href="#">色石相場</a>
+    </nav>
+    <main>
+        <h1>翌日のAI相場予想</h1>
+        <p class="date">2025年◯月◯日（月）</p>
+        <div class="price-box">
+            <p>金価格（K24IG）：17,250円　<span class="up">（＋124円）</span></p>
+            <p>プラチナ価格（Pt1000IG）：7,250円　<span class="down">（−54円）</span></p>
+        </div>
+        <p class="note">
+            ※本ページに表示されている相場予測は、最新の市場データに基づいており、<br>
+            5分ごとに自動更新されます。予測は翌日に向けて正確性が高まるよう設計されています。
+        </p>
+    </main>
 </body>
 </html>
