@@ -1,96 +1,18 @@
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-    background-color: #121212;
-    color: #fff;
+  background-color: #121212;
+  color: #f0f0f0;
+  font-family: sans-serif;
+  padding: 2rem;
 }
-
-header {
-    background: #1a1a1a;
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #333;
+.container {
+  max-width: 600px;
+  margin: auto;
 }
-
-header h1 {
-    font-size: 1.75rem;
-    margin: 0;
+.note {
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  color: #aaa;
 }
-
-header .update {
-    color: #999;
-    font-size: 0.9rem;
-}
-
-main {
-    padding: 2rem 1rem;
-    max-width: 900px;
-    margin: auto;
-}
-
-.price-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-}
-
-.card {
-    flex: 1 1 28%;
-    background-color: #1e1e1e;
-    border-radius: 12px;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-}
-
-.card h2 {
-    margin: 0 0 0.5rem;
-}
-
-.card .value {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.card .change {
-    font-size: 0.95rem;
-    margin-top: 0.3rem;
-}
-
-.card .up {
-    color: #00ff99;
-}
-.card .down {
-    color: #ff5a5a;
-}
-
-.tables {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: space-between;
-}
-
-.table-section {
-    flex: 1 1 45%;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 0.5rem;
-}
-
-table td {
-    padding: 0.5rem;
-    border-bottom: 1px solid #333;
-}
-
-footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    color: #777;
-}
+.up { color: #00ff00; }
+.down { color: #ff4d4d; }

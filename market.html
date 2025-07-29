@@ -2,98 +2,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>本日の金・プラチナ・パラジウム買取価格</title>
-  <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 2rem;
-    }
-    h1 {
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .card {
-      background-color: #1e1e1e;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    .title {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-    }
-    .price-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .label {
-      font-size: 0.9rem;
-      color: #ccc;
-    }
-    .price {
-      font-size: 1.6rem;
-      font-weight: bold;
-    }
-    .gold { color: gold; }
-    .platinum { color: silver; }
-    .palladium { color: #60d0ff; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    td {
-      border: 1px solid #444;
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
-    td:first-child {
-      font-weight: bold;
-      width: 40%;
-    }
-    .note {
-      font-size: 0.8rem;
-      text-align: center;
-      color: #888;
-      margin-top: 2rem;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>金・プラチナ予測価格</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>本日の金・プラチナ・パラジウム買取価格</h1>
-
-  <div class="card">
-    <div class="title gold">金価格</div>
-    <div class="price-group">
-      <div><span class="label">業者向け:</span> <span class="price">17,295円/g</span></div>
-      <div><span class="label">一般向け:</span> <span class="price">16,776円/g</span></div>
-    </div>
+  <div class="container">
+    <h1>本日の金・プラチナ予測価格</h1>
+    <div id="gold-price">金価格: 読み込み中...</div>
+    <div id="platinum-price">プラチナ価格: 読み込み中...</div>
+    <p class="note">
+      ※本ページに表示されている相場予測は、最新の市場データに基づいており、5分ごとに自動更新されます。<br>
+      予測は翌日に向けて正確性が高まるよう設計されています。
+    </p>
   </div>
-
-  <div class="card">
-    <div class="title platinum">プラチナ価格</div>
-    <div class="price-group">
-      <div><span class="label">業者向け:</span> <span class="price">7,287円/g</span></div>
-      <div><span class="label">一般向け:</span> <span class="price">7,068円/g</span></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="title palladium">パラジウム価格</div>
-    <div class="price-group">
-      <div><span class="label">業者向け:</span> <span class="price">5,961円/g</span></div>
-      <div><span class="label">一般向け:</span> <span class="price">5,782円/g</span></div>
-    </div>
-  </div>
-
-  <div class="note">※一般向け価格は業者向け価格の3%減で算出しています（2025年7月28日 現在）</div>
+  <script src="script.js"></script>
 </body>
 </html>
