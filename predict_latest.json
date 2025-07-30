@@ -2,10 +2,10 @@
   "generated_at": "2025-07-30T12:00:00+09:00",
   "gold": {
     "price": 17295,
-    "prev": 17245
+    "diff": 50
   },
   "platinum": {
     "price": 7287,
-    "prev": 7307
+    "diff": -20
   }
 }

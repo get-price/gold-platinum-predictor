@@ -1,145 +1,123 @@
 
-// Utility
+// ===== Utilities =====
 const JP_DOW = ["日","月","火","水","木","金","土"];
-const fmt = (n) => n == null ? "--" : Number(n).toLocaleString('ja-JP');
+const fmt = (n) => (n==null? "--" : Number(n).toLocaleString('ja-JP'));
+function ymdWithDow(d){ const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),da=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${da}（${JP_DOW[d.getDay()]}）`; }
+function nowJST(){ const n=new Date(); return n; }
 
-function formatYMDWithDow(d) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const da = String(d.getDate()).padStart(2,'0');
-  const w = JP_DOW[d.getDay()];
-  return `${y}-${m}-${da}（${w}）`;
+// ===== Heading / Date / Clock =====
+function setHeading(mode){
+  const h1 = document.getElementById('heading-text');
+  const h1Date = document.getElementById('heading-date');
+  const metaDate = document.getElementById('meta-date');
+  const now = nowJST();
+  const base = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // today 00:00
+  const tomorrow = new Date(base.getTime() + 24*60*60*1000);
+  if(mode==='tomorrow'){
+    if(h1) h1.textContent = '翌日の相場予想';
+    if(h1Date) h1Date.textContent = ymdWithDow(tomorrow);
+    if(metaDate) metaDate.textContent = ymdWithDow(tomorrow);
+  }else if(mode==='today'){
+    if(h1) h1.textContent = '本日の買取相場';
+    if(h1Date) h1Date.textContent = ymdWithDow(base);
+    if(metaDate) metaDate.textContent = ymdWithDow(base);
+  }else{
+    if(h1) h1.textContent = '色石相場';
+    if(h1Date) h1Date.textContent = '';
+    if(metaDate) metaDate.textContent = ymdWithDow(base);
+  }
 }
+function setClock(){ const el=document.getElementById('updated-at'); const n=nowJST(); const hh=String(n.getHours()).padStart(2,'0'); const mm=String(n.getMinutes()).padStart(2,'0'); if(el) el.textContent=`更新: ${hh}:${mm}`; }
 
-function setClock() {
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2,'0');
-  const mm = String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('meta-updated').textContent = `更新: ${hh}:${mm}`;
-}
-
-// Tabs
-function showSection(name) {
-  document.querySelectorAll('[data-section]').forEach(sec => {
-    sec.hidden = (sec.dataset.section !== name);
-  });
-  document.querySelectorAll('.tab-link').forEach(a => {
-    a.setAttribute('aria-selected', (a.dataset.tab === name) ? 'true' : 'false');
-  });
-  const today = new Date();
-  const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-  if (name === 'tomorrow') {
-    document.getElementById('heading-text').textContent = '翌日の相場予想';
-    document.getElementById('heading-date').textContent = formatYMDWithDow(tomorrow);
-    document.getElementById('meta-date').textContent = formatYMDWithDow(tomorrow);
-  } else if (name === 'today') {
-    document.getElementById('heading-text').textContent = '本日の買取相場';
-    document.getElementById('heading-date').textContent = formatYMDWithDow(today);
-    document.getElementById('meta-date').textContent = formatYMDWithDow(today);
-  } else {
-    document.getElementById('heading-text').textContent = '色石相場';
-    document.getElementById('heading-date').textContent = '';
-    document.getElementById('meta-date').textContent = formatYMDWithDow(today);
+// ===== Data loaders =====
+async function safeFetch(url){
+  try{
+    const res = await fetch(url + (url.includes('?')?'&':'?') + 'ts=' + Date.now());
+    if(!res.ok) throw new Error(res.statusText);
+    return await res.json();
+  }catch(e){
+    console.error('Fetch failed', url, e);
+    return null;
   }
 }
 
-// Subtabs
-let currentKind = 'dealer';
-function setKind(kind) {
-  currentKind = kind;
-  document.querySelectorAll('.subtab').forEach(b => b.classList.toggle('is-active', b.dataset.kind === kind));
-  renderTodayTables(cacheToday);
+// Tomorrow prediction
+async function loadPredict(){
+  const status = document.getElementById('predict-status');
+  const data = await safeFetch('./data/predict_latest.json');
+  if(!data){ if(status) status.textContent='データ取得できません'; return; }
+  if(status) status.textContent = '5分ごとに自動更新';
+  // Gold
+  const gprice = data.gold?.price ?? null;
+  const gdiff  = data.gold?.diff ?? null;
+  document.getElementById('gold-price').textContent = `${fmt(gprice)} 円`;
+  const gd = document.getElementById('gold-diff');
+  if(gd){ gd.textContent = `(${gdiff>=0?'+':''}${fmt(gdiff)} 円)`; gd.classList.toggle('up', gdiff>0); gd.classList.toggle('down', gdiff<0); }
+  // Platinum
+  const pprice = data.platinum?.price ?? null;
+  const pdiff  = data.platinum?.diff ?? null;
+  document.getElementById('platinum-price').textContent = `${fmt(pprice)} 円`;
+  const pd = document.getElementById('platinum-diff');
+  if(pd){ pd.textContent = `(${pdiff>=0?'+':''}${fmt(pdiff)} 円)`; pd.classList.toggle('up', pdiff>0); pd.classList.toggle('down', pdiff<0); }
 }
 
-// Load prediction JSON (5-min refresh)
-let cachePred = null;
-async function loadPred() {
-  const res = await fetch('data/predict_latest.json?ts=' + Date.now());
-  if (!res.ok) return;
-  const j = await res.json();
-  cachePred = j;
-  // gold
-  document.getElementById('pred-gold-price').textContent = fmt(j.gold.price);
-  document.getElementById('pred-gold-prev').textContent = fmt(j.gold.prev);
-  const gdiff = j.gold.price - j.gold.prev;
-  const gEl = document.getElementById('pred-gold-diff');
-  gEl.textContent = (gdiff>=0?'+':'') + fmt(gdiff) + ' 円';
-  gEl.classList.toggle('up', gdiff>0); gEl.classList.toggle('down', gdiff<0);
-
-  // platinum
-  document.getElementById('pred-pt-price').textContent = fmt(j.platinum.price);
-  document.getElementById('pred-pt-prev').textContent = fmt(j.platinum.prev);
-  const pdiff = j.platinum.price - j.platinum.prev;
-  const pEl = document.getElementById('pred-pt-diff');
-  pEl.textContent = (pdiff>=0?'+':'') + fmt(pdiff) + ' 円';
-  pEl.classList.toggle('up', pdiff>0); pEl.classList.toggle('down', pdiff<0);
-}
-
-// Load today market JSON (09:45 daily)
-let cacheToday = null;
-async function loadToday() {
-  const res = await fetch('data/today_market.json?ts=' + Date.now());
-  if (!res.ok) return;
-  const j = await res.json();
-  cacheToday = j;
-  renderTodayTables(j);
-}
-
-function renderRows(tbody, rows) {
+// Today market
+let todayKind = 'dealer'; // dealer | retail
+function setTodayKind(k){ todayKind = k; document.querySelectorAll('.subtab').forEach(x=>x.classList.toggle('active', x.dataset.kind===k)); renderToday(window.__todayData); }
+function renderToday(data){
+  if(!data) return;
+  const factor = (todayKind==='retail') ? 0.98 : 1.0; // 一般向け=98%
+  const tbody = document.getElementById('today-tbody');
+  if(!tbody) return;
   tbody.innerHTML = '';
-  rows.forEach(([k, v]) => {
+  (data.items||[]).forEach(row => {
     const tr = document.createElement('tr');
-    const td1 = document.createElement('td'); td1.textContent = k;
-    const td2 = document.createElement('td'); td2.style.textAlign = 'right'; td2.textContent = fmt(v) + '円';
-    tr.appendChild(td1); tr.appendChild(td2);
+    const price = Math.round((row.price_jpy_g || 0) * factor);
+    tr.innerHTML = `<td>${row.category}</td><td>${row.fineness}</td><td style="text-align:right">${fmt(price)} 円/g</td>`;
     tbody.appendChild(tr);
   });
 }
-
-function renderTodayTables(j) {
-  if (!j) return;
-  const factor = currentKind === 'retail' ? 0.98 : 1.0; // 表示は98%
-  const titleDate = j.date_text || j.date;
-
-  // Gold
-  document.getElementById('gold-table-title').textContent = `${titleDate}の金買取価格一覧（税込）`;
-  const gRows = Object.entries(j.gold).map(([k,v]) => [k, Math.round(v * factor)]);
-  renderRows(document.querySelector('#gold-table tbody'), gRows);
-
-  // Platinum
-  document.getElementById('pt-table-title').textContent = `${titleDate}のプラチナ買取価格一覧（税込）`;
-  const pRows = Object.entries(j.platinum).map(([k,v]) => [k, Math.round(v * factor)]);
-  renderRows(document.querySelector('#pt-table tbody'), pRows);
-
-  // Combo
-  document.getElementById('combo-table-title').textContent = `${titleDate}の金・プラチナコンビ買取価格一覧`;
-  const cRows = Object.entries(j.combo).map(([k,v]) => [k, Math.round(v * factor)]);
-  renderRows(document.querySelector('#combo-table tbody'), cRows);
-
-  // Silver
-  document.getElementById('sv-table-title').textContent = `${titleDate}のシルバー買取価格一覧（税込）`;
-  const sRows = Object.entries(j.silver).map(([k,v]) => [k, Math.round(v * factor)]);
-  renderRows(document.querySelector('#sv-table tbody'), sRows);
+async function loadToday(){
+  const status = document.getElementById('today-status');
+  const data = await safeFetch('./data/today_market.json');
+  if(!data){ if(status) status.textContent='データ取得できません'; return; }
+  if(status) status.textContent='毎朝 9:45 に自動更新（色石バンクの98%を表示）';
+  window.__todayData = data;
+  renderToday(data);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Top tabs
-  document.querySelectorAll('.tab-link').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      showSection(a.dataset.tab);
-    });
+// Hash/tab routing
+function applyFromHash(){
+  const hash = (location.hash||'#tomorrow').toLowerCase();
+  const mode = hash.includes('today') ? 'today' : hash.includes('stones') ? 'stones' : 'tomorrow';
+  document.querySelectorAll('.tab-link').forEach(a=>{
+    const active = a.getAttribute('href') === '#' + mode;
+    a.classList.toggle('is-active', active);
+    a.setAttribute('aria-selected', active ? 'true':'false');
   });
-  // Subtabs
-  document.querySelectorAll('.subtab').forEach(b => {
-    b.addEventListener('click', () => setKind(b.dataset.kind));
+  ['tomorrow','today','stones'].forEach(sec => {
+    const el = document.querySelector(`[data-section="${sec}"]`);
+    if(el) el.style.display = (sec===mode)?'':'none';
   });
+  setHeading(mode);
+}
 
-  showSection('tomorrow');
-  setKind('dealer');
-  loadPred();
-  loadToday();
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  // top tabs click
+  document.querySelectorAll('.tab-link').forEach(a => {
+    a.addEventListener('click', (e)=>{ e.preventDefault(); const href=a.getAttribute('href'); history.replaceState(null,'',href); applyFromHash(); });
+  });
+  // today subtabs
+  document.querySelectorAll('.subtab').forEach(btn => {
+    btn.addEventListener('click', ()=> setTodayKind(btn.dataset.kind));
+  });
+  applyFromHash();
   setClock();
   setInterval(setClock, 60*1000);
-  setInterval(loadPred, 5*60*1000); // 5-min
+
+  // load data
+  loadPredict();
+  setInterval(loadPredict, 5*60*1000);
+  loadToday();
 });

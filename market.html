@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>翌日の相場予想</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>宮善貴金属 | 相場</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
-  <!-- Header: ロゴ + タブ -->
+  <!-- Header -->
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
-        <img src="assets/miyazen_logo.png" alt="宮善貴金属" class="logo" />
+        <img src="./assets/miyazen_logo.png" alt="宮善貴金属" class="logo" />
+        <span class="brand-text" aria-hidden="true">宮善貴金属</span>
       </div>
       <nav class="header-tabs" role="tablist" aria-label="相場タブ">
-        <a href="#tomorrow" class="tab-link is-active" data-tab="tomorrow" role="tab" aria-selected="true">翌日の相場予想</a>
-        <a href="#today" class="tab-link" data-tab="today" role="tab" aria-selected="false">本日の買取相場</a>
-        <a href="#gem" class="tab-link" data-tab="gem" role="tab" aria-selected="false">色石相場</a>
+        <a href="#tomorrow" class="tab-link is-active" role="tab" aria-selected="true">翌日の相場予想</a>
+        <a href="#today" class="tab-link" role="tab" aria-selected="false">本日の買取相場</a>
+        <a href="#stones" class="tab-link" role="tab" aria-selected="false">色石相場</a>
       </nav>
     </div>
   </header>
@@ -25,17 +26,66 @@
     <header class="head">
       <h1>
         <span id="heading-text">翌日の相場予想</span>
-        <span id="heading-date" class="h1-date">--</span>
+        <span id="heading-date" class="h1-date"></span>
       </h1>
       <div class="meta">
-        <span id="today-date">--/--/-- (--)</span>
+        <span id="meta-date">--</span>
         <span id="updated-at" class="updated">更新: --:--</span>
       </div>
     </header>
 
-    <!-- body は既存そのままを想定（ここでは空） -->
+    <!-- Tomorrow section -->
+    <section data-section="tomorrow">
+      <div class="status" id="predict-status">5分ごとに自動更新</div>
+      <div class="cards">
+        <div class="card">
+          <div class="row">
+            <div class="label">金 (K24)</div>
+            <div class="value">
+              <span id="gold-price" class="price">--</span>
+              <span id="gold-diff" class="diff">--</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <div class="label">プラチナ (Pt)</div>
+            <div class="value">
+              <span id="platinum-price" class="price">--</span>
+              <span id="platinum-diff" class="diff">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="status alert">データソース：Yahoo Finance（GC=F, PL=F, JPY=X）/ 円/グラム換算</div>
+    </section>
+
+    <!-- Today section -->
+    <section data-section="today" style="display:none">
+      <div class="subtabs">
+        <button class="subtab active" data-kind="dealer">業者向け</button>
+        <button class="subtab" data-kind="retail">一般向け</button>
+      </div>
+      <div class="status" id="today-status">毎朝 9:45 に自動更新（色石バンクの98%を表示）</div>
+      <table class="table">
+        <thead>
+          <tr><th>カテゴリ</th><th>品位</th><th style="text-align:right">価格（円/g）</th></tr>
+        </thead>
+        <tbody id="today-tbody">
+          <!-- filled by JS -->
+        </tbody>
+      </table>
+      <div class="status alert">データソース：色石バンク（1日1回）</div>
+    </section>
+
+    <!-- Stones section (empty for now) -->
+    <section data-section="stones" style="display:none">
+      <div class="status">色石相場は準備中です。</div>
+    </section>
+
+    <footer class="footer">© 宮善貴金属</footer>
   </div>
 
-  <script src="script.js"></script>
+  <script defer src="./assets/app.js"></script>
 </body>
 </html>
