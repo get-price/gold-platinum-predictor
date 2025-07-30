@@ -29,9 +29,10 @@ jobs:
         run: |
           mkdir -p data
 
-      - name: Build today_market.json
-        run: |
-          python fetch_today_market.py   # ← ルートにある想定
+   　  - name: Build today_market.json
+  run: |
+    mkdir -p data
+    python fetch_today_market.py   # ← scripts/ を外す
 
       - name: Commit & push
         run: |
