@@ -38,7 +38,10 @@ jobs:
       # ★ここが肝心：リポジトリ直下にあるファイルを実行
       #   もし scripts/ 配下に移動したなら下の行を「python scripts/fetch_today_market.py」に戻してください
       - name: Build today_market.json
-        run: python fetch_today_market.py
+    　- name: Build today_market.json
+      run: |
+    mkdir -p data
+    python fetch_today_market.py
 
       - name: Commit & push
         run: |
