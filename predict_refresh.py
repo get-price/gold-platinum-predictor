@@ -1,40 +1,41 @@
-
-# scripts/predict_refresh.py
-# Source: Yahoo Finance (GC=F, PL=F, JPY=X). Convert USD/oz -> JPY/g and write data/predict_latest.json
-import json, datetime as dt
-from zoneinfo import ZoneInfo
+# predict_refresh.py
+import os, json
+from datetime import datetime, timezone, timedelta
 import yfinance as yf
 
-OZT_TO_G = 31.1034768
+OZT_TO_G = 31.1034768  # トロイオンス→グラム
 
-def jpy_per_g(ticker_close_usd_per_oz, usd_jpy):
-    return float(ticker_close_usd_per_oz) * float(usd_jpy) / OZT_TO_G
-
-def fetch_price_and_prev(ticker, usd_jpy):
+def jpy_per_g_from_ticker(ticker: str, usd_jpy: float) -> tuple[int, int]:
+    """(現在値, 前日終値) を 円/グラム で返す"""
     hist = yf.Ticker(ticker).history(period="2d", interval="1d", auto_adjust=False)
-    if hist.empty:
+    if hist is None or len(hist) == 0:
         raise RuntimeError(f"No data for {ticker}")
-    last = hist.iloc[-1]["Close"]
-    prev = hist.iloc[-2]["Close"] if len(hist)>=2 else last
-    return jpy_per_g(last, usd_jpy), jpy_per_g(prev, usd_jpy)
+    last = float(hist.iloc[-1]["Close"])
+    prev = float(hist.iloc[-2]["Close"]) if len(hist) >= 2 else last
+    now_jpy_g  = last * usd_jpy / OZT_TO_G
+    prev_jpy_g = prev * usd_jpy / OZT_TO_G
+    return int(round(now_jpy_g)), int(round(prev_jpy_g))
 
 def main():
-    # USD/JPY
+    # 為替（USD/JPY）
     fx = yf.Ticker("JPY=X").history(period="5d", interval="1d")
-    if fx.empty:
-        raise RuntimeError("No FX data")
+    if fx is None or len(fx) == 0:
+        raise RuntimeError("No FX data (JPY=X)")
     usd_jpy = float(fx.iloc[-1]["Close"])
 
-    gold, gold_prev = fetch_price_and_prev("GC=F", usd_jpy)
-    plat, plat_prev = fetch_price_and_prev("PL=F", usd_jpy)
+    # 金・プラチナ（固定ソース）
+    gold_now, gold_prev = jpy_per_g_from_ticker("GC=F", usd_jpy)
+    plat_now, plat_prev = jpy_per_g_from_ticker("PL=F", usd_jpy)
 
-    def r0(x): return int(round(x))
-
+    jst = timezone(timedelta(hours=9))
     payload = {
-        "generated_at": dt.datetime.now(ZoneInfo("Asia/Tokyo")).isoformat(),
-        "gold": {"price": r0(gold), "diff": r0(gold - gold_prev)},
-        "platinum": {"price": r0(plat), "diff": r0(plat - plat_prev)}
+        "generated_at": datetime.now(jst).isoformat(),
+        "note": "source: Yahoo Finance (GC=F, PL=F, JPY=X) → JPY/gram",
+        "gold":     {"price": gold_now, "diff": gold_now - gold_prev},
+        "platinum": {"price": plat_now, "diff": plat_now - plat_prev},
     }
+
+    os.makedirs("data", exist_ok=True)
     with open("data/predict_latest.json", "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
