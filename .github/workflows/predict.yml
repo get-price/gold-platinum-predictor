@@ -2,11 +2,11 @@ name: Predict (every 5 min)
 
 on:
   schedule:
-    - cron: "*/5 * * * *"     # 5分ごと（UTC）
-  workflow_dispatch:
+    - cron: "*/5 * * * *"        # 5分ごと（UTC）
+  workflow_dispatch:              # 手動実行ボタン
 
 permissions:
-  contents: write
+  contents: write                 # JSONをコミットする権限
 
 jobs:
   refresh:
@@ -29,8 +29,8 @@ jobs:
         run: mkdir -p data
 
       - name: Build predict_latest.json
-        run: python predict_refresh.py       # ← ルートにある想定
-        # scripts/ 配下に置いている場合は上をコメントアウトして↓に変更
+        run: python predict_refresh.py   # ← predict_refresh.py がルート直下にある想定
+        # scripts/ 配下にあるなら上をコメントアウトして次の1行に変更
         # run: python scripts/predict_refresh.py
 
       - name: Commit & push
