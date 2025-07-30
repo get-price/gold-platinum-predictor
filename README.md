@@ -1,18 +1,33 @@
 
-# 金・プラチナ 買取相場（5分ごと更新）
+# 宮善貴金属 相場サイト（完成一式）
 
-- GitHub Pages で静的公開
-- `data/latest.json` を **GitHub Actionsが5分ごとに更新**
-- フロントは `index.html + assets/` が JSON を読み取って表示します（リロード不要／自動反映）
+## 概要
+- **翌日の相場予想**：5分ごと自動更新（ソース: Yahoo Finance 先物 + USDJPY）。
+- **本日の買取相場**：毎朝 **09:45 JST** に取得（ソース: **色石バンク**）。表示は **相場の98%**。
+- フロントは `index.html`（ヘッダーにタブ）、データは `data/*.json` を参照。
+
+## データソース（固定）
+- 予測用（5分ごと）
+  - 金: `GC=F`（COMEX Gold futures, Yahoo Finance）
+  - プラチナ: `PL=F`（NYMEX Platinum futures, Yahoo Finance）
+  - 為替: `JPY=X`（USD/JPY, Yahoo Finance）
+- 本日相場（09:45）
+  - 色石バンク: https://iroishi-bank.jp/market/
+
+## JSON
+- `data/predict_latest.json`
+```json
+{ "generated_at":"...", "gold": { "price":17295,"prev":17245 }, "platinum": { "price":7287,"prev":7307 } }
+```
+- `data/today_market.json`（**表示98%値**）
+```json
+{ "date":"YYYY-MM-DD", "date_text":"2025年7月30日の", "gold":{ "K24":17010, ... }, "platinum":{...}, "combo":{...}, "silver":{...} }
+```
+
+## スケジュール
+- GitHub Actions cron は **UTC**。JST 09:45 は `45 0 * * *` で設定。
 
 ## セットアップ
-1. この一式をリポジトリのルートに配置（既存ファイルがある場合はマージ）
-2. GitHub Pages の設定を **main / root** で有効化
-3. Actions タブで `Refresh prices every 5 minutes` が動いていることを確認
-
-## 設定を変えたい場合
-- 一般向け価格 = 業者向けの 5%減 → `scripts/refresh.py` 内の `0.95` を変更
-- 通貨換算: `JPY=X`（USDJPY）で計算。銘柄は `GC=F`（金先物）, `PL=F`（白金先物）
-
-## 注意
-- GitHub Actions のスケジュールは実行タイミングが数分遅延することがあります。
+1. リポジトリ直下にこの一式を配置して push。
+2. GitHub Pages を有効化（main/root）。
+3. Settings → Actions → General で **Read and write permissions** を有効化。

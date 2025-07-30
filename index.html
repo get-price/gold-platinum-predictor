@@ -3,54 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>本日の貴金属買取相場 × 明日のAI予測</title>
+  <title>宮善貴金属 | 相場ダッシュボード</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <header class="header">
-    <div class="brand">GO Metals</div>
-    <nav class="nav">
-      <a href="#" class="nav-link active" id="tab-today">本日の貴金属買取相場</a>
-      <a href="#" class="nav-link" id="tab-tomorrow">明日のAI予測相場</a>
-    </nav>
+  <!-- Header: logo + top tabs -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="assets/miyazen_logo.png" alt="宮善貴金属" class="logo" />
+        <span class="brand-text">宮善貴金属</span>
+      </div>
+      <nav class="header-tabs" role="tablist">
+        <a href="#tomorrow" class="tab-link" data-tab="tomorrow" aria-selected="true">翌日の相場予想</a>
+        <a href="#today" class="tab-link" data-tab="today">本日の買取相場</a>
+        <a href="#stones" class="tab-link" data-tab="stones">色石相場</a>
+      </nav>
+    </div>
   </header>
 
   <main class="container">
-    <section class="panel">
-      <div class="tabs">
-        <button class="tab-button active" data-kind="dealer">業者向け</button>
-        <button class="tab-button" data-kind="retail">一般向け</button>
+    <!-- Heading with date -->
+    <section class="heading">
+      <h1>
+        <span id="heading-text">翌日の相場予想</span>
+        <span id="heading-date" class="h1-date">--</span>
+      </h1>
+      <div class="meta">
+        <span id="meta-date">--</span>
+        <span id="meta-updated">更新: --:--</span>
       </div>
+    </section>
 
-      <div id="updatedAt" class="updated">更新: --</div>
-
+    <!-- Tomorrow prediction cards -->
+    <section id="sec-tomorrow" data-section="tomorrow">
       <div class="cards">
         <div class="card">
           <div class="card-title">金 (K24)</div>
-          <div class="price-row">
-            <span id="gold-price" class="price">--</span>
-            <span id="gold-diff" class="diff">--</span>
+          <div class="row">
+            <div class="price" id="pred-gold-price">--</div>
+            <div class="diff" id="pred-gold-diff">--</div>
           </div>
-          <div class="sub">前日: <span id="gold-prev">--</span></div>
+          <div class="sub">前日: <span id="pred-gold-prev">--</span></div>
         </div>
-
         <div class="card">
           <div class="card-title">プラチナ (Pt)</div>
-          <div class="price-row">
-            <span id="platinum-price" class="price">--</span>
-            <span id="platinum-diff" class="diff">--</span>
+          <div class="row">
+            <div class="price" id="pred-pt-price">--</div>
+            <div class="diff" id="pred-pt-diff">--</div>
           </div>
-          <div class="sub">前日: <span id="platinum-prev">--</span></div>
+          <div class="sub">前日: <span id="pred-pt-prev">--</span></div>
         </div>
       </div>
+      <p class="note">予測は5分ごとに自動更新されます（同一ソース：Yahoo Financeの先物/為替換算）。</p>
+    </section>
+
+    <!-- Today market with sub tabs -->
+    <section id="sec-today" data-section="today" hidden>
+      <div class="subtabs">
+        <button class="subtab is-active" data-kind="dealer">業者向け</button>
+        <button class="subtab" data-kind="retail">一般向け</button>
+      </div>
+
+      <div id="tables">
+        <!-- Gold -->
+        <div class="table-block">
+          <div class="table-title" id="gold-table-title">--</div>
+          <table class="price-table" id="gold-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- Platinum -->
+        <div class="table-block">
+          <div class="table-title" id="pt-table-title">--</div>
+          <table class="price-table" id="pt-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- Combo -->
+        <div class="table-block">
+          <div class="table-title" id="combo-table-title">--</div>
+          <div class="table-sub">(税込)</div>
+          <table class="price-table" id="combo-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- Silver -->
+        <div class="table-block">
+          <div class="table-title" id="sv-table-title">--</div>
+          <table class="price-table" id="sv-table">
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="note">本日の買取相場は毎朝9:45に自動更新（出典：色石バンク）。表示価格は同サイト相場の98%で算出しています。</p>
+    </section>
+
+    <!-- Stones placeholder -->
+    <section id="sec-stones" data-section="stones" hidden>
+      <p>色石相場（準備中）</p>
     </section>
   </main>
 
   <footer class="footer">
-    <div>© GO Inc.</div>
-    <div id="dow">曜日: --</div>
+    © 宮善貴金属
   </footer>
 
-  <script src="assets/script.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>
