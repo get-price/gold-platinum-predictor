@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write               # JSONをコミットするため
 
 jobs:
   fetch:
@@ -23,25 +23,20 @@ jobs:
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 lxml
-
-      - name: Show workspace files (debug)
-        run: |
-          pwd
-          ls -al
-          echo "----"
-          ls -al scripts || true
+          pip install --upgrade requests beautifulsoup4 lxml
 
       - name: Ensure data dir exists
         run: mkdir -p data
 
-      # ★ここが肝心：リポジトリ直下にあるファイルを実行
-      #   もし scripts/ 配下に移動したなら下の行を「python scripts/fetch_today_market.py」に戻してください
+      # ここが肝心：fetch_today_market.py の場所に合わせる
       - name: Build today_market.json
-    　- name: Build today_market.json
-      run: |
-    mkdir -p data
-    python fetch_today_market.py
+        run: |
+          python fetch_today_market.py            # ← リポジトリ直下にある場合
+
+      # ↑が scripts/ 配下にある場合は、↑をコメントアウトして↓を使う
+      # - name: Build today_market.json
+      #   run: |
+      #     python scripts/fetch_today_market.py
 
       - name: Commit & push
         run: |
