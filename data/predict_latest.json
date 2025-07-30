@@ -1,12 +1,12 @@
 {
-  "generated_at": "2025-07-30T22:54:41.466959+09:00",
+  "generated_at": "2025-07-30T23:50:49.733402+09:00",
   "note": "anchor=today_market(dealer)×overseas_ratio",
   "gold": {
-    "price": 16841,
-    "diff": 171
+    "price": 16839,
+    "diff": 169
   },
   "platinum": {
-    "price": 6976,
-    "diff": 49
+    "price": 6893,
+    "diff": -34
   }
 }
