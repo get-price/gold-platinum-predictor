@@ -1,130 +1,40 @@
 {
   "date": "2025-07-30",
-  "items": [
-    {
-      "category": "金",
-      "fineness": "K24",
-      "price_jpy_g": 24
-    },
-    {
-      "category": "金",
-      "fineness": "K22",
-      "price_jpy_g": 22
-    },
-    {
-      "category": "金",
-      "fineness": "K20",
-      "price_jpy_g": 20
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 900
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 850
-    },
-    {
-      "category": "金",
-      "fineness": "K24",
-      "price_jpy_g": 24
-    },
-    {
-      "category": "金",
-      "fineness": "K22",
-      "price_jpy_g": 22
-    },
-    {
-      "category": "金",
-      "fineness": "K20",
-      "price_jpy_g": 20
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "プラチナ",
-      "fineness": "Pt1000",
-      "price_jpy_g": 1000
-    },
-    {
-      "category": "プラチナ",
-      "fineness": "Pt950",
-      "price_jpy_g": 950
-    },
-    {
-      "category": "プラチナ",
-      "fineness": "Pt900",
-      "price_jpy_g": 900
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 18
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 900
-    },
-    {
-      "category": "金",
-      "fineness": "K18",
-      "price_jpy_g": 850
-    }
-  ]
+  "generated_at": "2025-07-30T09:45:00+09:00",
+  "source": "https://iroishi-bank.jp/market/",
+  "policy": { "dealer_factor": 0.98, "general_factor": 0.97 },
+  "sections": {
+    "gold": [
+      { "label": "K24",   "source": 17010, "dealer": 16670, "general": 16170 },
+      { "label": "K22",   "source": 15413, "dealer": 15105, "general": 14652 },
+      { "label": "K21.6","source": 15188, "dealer": 14884, "general": 14437 },
+      { "label": "K20",   "source": 14059, "dealer": 13778, "general": 13365 },
+      { "label": "K18",   "source": 13017, "dealer": 12757, "general": 12374 },
+      { "label": "K14",   "source": 9550,  "dealer": 9359,  "general": 9078 },
+      { "label": "K12",   "source": 7811,  "dealer": 7655,  "general": 7425 },
+      { "label": "K10",   "source": 6770,  "dealer": 6635,  "general": 6436 },
+      { "label": "K9",    "source": 5989,  "dealer": 5869,  "general": 5693 },
+      { "label": "K18WG", "source": 13027, "dealer": 12766, "general": 12383 },
+      { "label": "K14WG", "source": 9669,  "dealer": 9476,  "general": 9192 }
+    ],
+    "platinum": [
+      { "label": "PT1000","source": 7068,  "dealer": 6927,  "general": 6720 },
+      { "label": "PT950", "source": 6707,  "dealer": 6573,  "general": 6376 },
+      { "label": "PT900", "source": 6916,  "dealer": 6778,  "general": 6574 },
+      { "label": "PT850", "source": 6555,  "dealer": 6424,  "general": 6231 }
+    ],
+    "combo": [
+      { "label": "K18ベース/PT900コンビ(9:1)", "source": 12327, "dealer": 12080, "general": 11718 },
+      { "label": "K18ベース/PT850コンビ(9:1)", "source": 12291, "dealer": 12045, "general": 11684 },
+      { "label": "K18/Pt900ハーフ",               "source": 9728,  "dealer": 9533,  "general": 9247  },
+      { "label": "K18/Pt850ハーフ",               "source": 9548,  "dealer": 9357,  "general": 9076  },
+      { "label": "PT900ベース/K18コンビ(9:1)",   "source": 7121,  "dealer": 6978,  "general": 6768  },
+      { "label": "PT850ベース/K18コンビ(9:1)",   "source": 6797,  "dealer": 6661,  "general": 6461  }
+    ],
+    "silver": [
+      { "label": "SV1000","source": 176, "dealer": 173, "general": 168 },
+      { "label": "SV950", "source": 168, "dealer": 165, "general": 160 },
+      { "label": "SV925", "source": 157, "dealer": 154, "general": 149 }
+    ]
+  }
 }
