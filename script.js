@@ -1,77 +1,77 @@
 
-const fmt = (n) => n == null ? "--" : n.toLocaleString('ja-JP', { maximumFractionDigits: 0 });
-const dowJP = ["日","月","火","水","木","金","土"];
+const JP_DOW = ["日","月","火","水","木","金","土"];
+let currentKind = "dealer"; // 'dealer' | 'retail'
 
-let currentKind = "dealer"; // 'dealer' or 'retail'
+const fmt = (n) => n == null ? "--" : n.toLocaleString('ja-JP');
 
-function applyKind(kind) {
+function setDateAndTime(updatedISO) {
+  const now = updatedISO ? new Date(updatedISO) : new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const dow = JP_DOW[now.getDay()];
+  document.getElementById('today-date').textContent = `${y}-${m}-${d}（${dow}）`;
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('updated-at').textContent = `更新: ${hh}:${mm}`;
+}
+
+function applyKind(kind, data) {
   currentKind = kind;
-  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.toggle('active', btn.dataset.kind===kind));
-  render(dataCache);
+  document.querySelectorAll('.tab').forEach(btn => btn.classList.toggle('active', btn.dataset.kind === kind));
+  render(data);
 }
 
-function setDow() {
-  const d = new Date();
-  document.getElementById('dow').textContent = "曜日: " + dowJP[d.getDay()];
-}
+let cache = null;
 
-function setUpdated(ts) {
-  const d = ts ? new Date(ts) : new Date();
-  const s = d.toLocaleString('ja-JP', { hour12:false });
-  document.getElementById('updatedAt').textContent = `更新: ${s}（5分ごと自動更新）`;
-}
-
-let dataCache = null;
-
-async function load() {
+async function fetchData() {
   try {
-    // add cache buster
-    const res = await fetch('data/latest.json?ts=' + Date.now());
-    if (!res.ok) throw new Error(res.statusText);
-    const json = await res.json();
-    dataCache = json;
-    setUpdated(json.generated_at);
-    render(json);
+    const res = await fetch('predict.json?ts=' + Date.now());
+    if (!res.ok) throw new Error('predict.json not found');
+    const data = await res.json();
+    cache = data;
+    setDateAndTime(data.date ? (data.date + 'T00:00:00+09:00') : undefined);
+    render(data);
   } catch (e) {
-    console.error("load error", e);
+    console.error(e);
   }
 }
 
-function render(json) {
-  if (!json) return;
-  const k = currentKind;
-  // gold
-  const gp = json.gold[k].price_jpy_g;
-  const gprev = json.gold[k].prev_jpy_g;
-  const gdiff = gp - gprev;
-  document.getElementById('gold-price').textContent = fmt(gp) + " 円/g";
-  document.getElementById('gold-prev').textContent = fmt(gprev) + " 円/g";
-  const gd = document.getElementById('gold-diff');
-  gd.textContent = (gdiff >= 0 ? "+" : "") + fmt(gdiff);
-  gd.classList.toggle('up', gdiff >= 0);
-  gd.classList.toggle('down', gdiff < 0);
+function render(data) {
+  if (!data) return;
+  const goldDealer = Number(data.gold?.price ?? 0);
+  const goldPrev = goldDealer - Number(data.gold?.diff ?? 0);
+  const platDealer = Number(data.platinum?.price ?? 0);
+  const platPrev = platDealer - Number(data.platinum?.diff ?? 0);
 
-  // platinum
-  const pp = json.platinum[k].price_jpy_g;
-  const pprev = json.platinum[k].prev_jpy_g;
-  const pdiff = pp - pprev;
-  document.getElementById('platinum-price').textContent = fmt(pp) + " 円/g";
-  document.getElementById('platinum-prev').textContent = fmt(pprev) + " 円/g";
+  const factor = currentKind === 'retail' ? 0.97 : 1.0;
+  const gold = Math.round(goldDealer * factor);
+  const goldPrevAdj = Math.round(goldPrev * factor);
+  const goldDiffAdj = gold - goldPrevAdj;
+
+  const plat = Math.round(platDealer * factor);
+  const platPrevAdj = Math.round(platPrev * factor);
+  const platDiffAdj = plat - platPrevAdj;
+
+  document.getElementById('gold-price').textContent = `${fmt(gold)} 円`;
+  const gd = document.getElementById('gold-diff');
+  gd.textContent = `(${goldDiffAdj >= 0 ? '+' : ''}${fmt(goldDiffAdj)} 円)`;
+  gd.classList.toggle('up', goldDiffAdj > 0);
+  gd.classList.toggle('down', goldDiffAdj < 0);
+  document.getElementById('gold-prev').textContent = `${fmt(goldPrevAdj)} 円`;
+
+  document.getElementById('platinum-price').textContent = `${fmt(plat)} 円`;
   const pd = document.getElementById('platinum-diff');
-  pd.textContent = (pdiff >= 0 ? "+" : "") + fmt(pdiff);
-  pd.classList.toggle('up', pdiff >= 0);
-  pd.classList.toggle('down', pdiff < 0);
+  pd.textContent = `(${platDiffAdj >= 0 ? '+' : ''}${fmt(platDiffAdj)} 円)`;
+  pd.classList.toggle('up', platDiffAdj > 0);
+  pd.classList.toggle('down', platDiffAdj < 0);
+  document.getElementById('platinum-prev').textContent = `${fmt(platPrevAdj)} 円`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setDow();
-  load();
-  setInterval(load, 60 * 1000);
-
-  document.getElementById('tab-today').addEventListener('click', e => e.preventDefault());
-  document.getElementById('tab-tomorrow').addEventListener('click', e => e.preventDefault());
-
-  document.querySelectorAll('.tab-button').forEach(btn => {
-    btn.addEventListener('click', () => applyKind(btn.dataset.kind));
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => applyKind(btn.dataset.kind, cache));
   });
+  fetchData();
+  setInterval(fetchData, 5 * 60 * 1000);
 });

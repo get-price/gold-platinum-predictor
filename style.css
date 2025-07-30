@@ -1,18 +1,36 @@
 
 body {
-  background-color: #121212;
-  color: #f0f0f0;
-  font-family: sans-serif;
-  padding: 2rem;
+  background-color: #0f1115;
+  color: #e9eef5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, Arial, sans-serif;
+  margin: 0;
+  padding: 24px 16px;
 }
 .container {
-  max-width: 600px;
-  margin: auto;
+  max-width: 720px;
+  margin: 0 auto;
 }
-.note {
-  font-size: 0.9rem;
-  margin-top: 2rem;
-  color: #aaa;
+.head h1 { margin: 0 0 6px; font-size: 20px; }
+.meta { color: #9aa8b5; font-size: 12px; display:flex; gap:12px; }
+.updated { opacity: 0.9; }
+
+.tabs { display: flex; gap: 8px; margin: 16px 0 12px; }
+.tab {
+  background: #151a22; color: #b5c0cf; border: 1px solid #253043;
+  padding: 8px 12px; border-radius: 999px; cursor: pointer;
 }
-.up { color: #00ff00; }
-.down { color: #ff4d4d; }
+.tab.active, .tab:hover { color: #e9eef5; background: #1a2432; }
+
+.card {
+  background: #121722; border: 1px solid #253043; border-radius: 14px;
+  padding: 14px; margin: 10px 0;
+}
+.row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.label { color: #9aa8b5; }
+.value { display: flex; align-items: baseline; gap: 12px; }
+.price { font-size: 36px; font-weight: 800; letter-spacing: 0.5px; }
+.diff { font-weight: 700; }
+.diff.up { color: #2fd276; }
+.diff.down { color: #ff6161; }
+.sub { margin-top: 6px; color: #93a1b3; font-size: 12px; }
+.note { font-size: 12px; color: #97a6b8; margin-top: 18px; line-height: 1.6; }

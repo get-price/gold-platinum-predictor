@@ -1,22 +1,54 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>金・プラチナ予測価格</title>
+  <title>本日の金・プラチナ予測価格</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>本日の金・プラチナ予測価格</h1>
-    <div id="gold-price">金価格: 読み込み中...</div>
-    <div id="platinum-price">プラチナ価格: 読み込み中...</div>
+    <header class="head">
+      <h1>本日の金・プラチナ予測価格</h1>
+      <div class="meta">
+        <span id="today-date">--/--/-- (--)</span>
+        <span id="updated-at" class="updated">更新: --:--</span>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" data-kind="dealer">業者向け</button>
+      <button class="tab" data-kind="retail">一般向け（3％減）</button>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <div class="label">金 (K24)</div>
+        <div class="value">
+          <span id="gold-price" class="price">--</span>
+          <span id="gold-diff" class="diff">--</span>
+        </div>
+      </div>
+      <div class="sub">前日: <span id="gold-prev">--</span></div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <div class="label">プラチナ (Pt)</div>
+        <div class="value">
+          <span id="platinum-price" class="price">--</span>
+          <span id="platinum-diff" class="diff">--</span>
+        </div>
+      </div>
+      <div class="sub">前日: <span id="platinum-prev">--</span></div>
+    </div>
+
     <p class="note">
-      ※本ページに表示されている相場予測は、最新の市場データに基づいており、5分ごとに自動更新されます。<br>
+      ※本ページの予測は5分ごとに自動更新されます。一般向けは業者向けの<strong>3％減（×0.97）</strong>で表示します。<br>
       予測は翌日に向けて正確性が高まるよう設計されています。
     </p>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
