@@ -2,90 +2,114 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>宮善貴金属 | 相場</title>
-  <link rel="stylesheet" href="./assets/styles.css" />
+  <!-- 必要なら既存のCSSを読み込み -->
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    /* 最低限の体裁（既存CSSがあればそちらが優先されます） */
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 16px; }
+    header.header { display:flex; align-items:center; gap:16px; padding:16px 0; }
+    header .brand { display:flex; align-items:center; gap:12px; }
+    header img.logo { height:40px; width:auto; }
+    nav.tabs { margin-left:auto; display:flex; gap:12px; }
+    nav.tabs a { padding:8px 14px; border:1px solid #ccc; border-radius:24px; text-decoration:none; color:inherit; }
+    nav.tabs a.is-active { border-color:#999; background:#f5f5f5; }
+    h1 { margin: 12px 0 6px; font-size: 2rem; }
+    .meta { color:#555; margin-bottom: 12px; }
+    .section-title { font-size: 1.6rem; margin-top: 24px; }
+    .card { padding:12px 16px; border:1px solid #2a2a2a; border-radius:12px; background:#0f0f0f; color:#f0f0f0; }
+    .price-block { margin: 10px 0 18px; }
+    .label { font-weight:600; margin-bottom:6px; }
+    .big { font-size:1.8rem; font-weight:700; }
+    .diff.up { color:#1db954; }
+    .diff.down { color:#ff4d4d; }
+    table { width:100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border-bottom: 1px solid #ddd; padding: 10px; }
+    th { text-align:left; background:#fafafa; }
+    td:last-child { text-align:right; }
+    .subtabs { display:flex; gap:10px; margin: 8px 0 4px; }
+    .subtabs .subtab { padding:6px 12px; border:1px solid #ccc; border-radius:18px; background:#fff; cursor:pointer; }
+    .subtabs .subtab.active { background:#f0f0f0; border-color:#999; }
+    footer.footer { margin: 24px 0; color:#666; }
+    [data-section] { display:none; }
+    [data-section].show { display:block; }
+  </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="header-inner">
+  <div class="wrap">
+    <!-- ヘッダー -->
+    <header class="header">
       <div class="brand">
-        <img src="./assets/miyazen_logo.png" alt="宮善貴金属" class="logo" />
-        <span class="brand-text" aria-hidden="true">宮善貴金属</span>
+        <!-- ロゴファイル名は手元のものに合わせて変更（例：miyazen_logo.png） -->
+        <img class="logo" src="./miyazen_logo.png" alt="宮善貴金属" />
+        <strong>宮善貴金属</strong>
       </div>
-      <nav class="header-tabs" role="tablist" aria-label="相場タブ">
-        <a href="#tomorrow" class="tab-link is-active" role="tab" aria-selected="true">翌日の相場予想</a>
-        <a href="#today" class="tab-link" role="tab" aria-selected="false">本日の買取相場</a>
-        <a href="#stones" class="tab-link" role="tab" aria-selected="false">色石相場</a>
+      <nav class="tabs">
+        <a href="#tomorrow" class="tab-link is-active">翌日の相場予想</a>
+        <a href="#today" class="tab-link">本日の買取相場</a>
+        <a href="#stones" class="tab-link">色石相場</a>
       </nav>
-    </div>
-  </header>
-
-  <div class="container">
-    <header class="head">
-      <h1>
-        <span id="heading-text">翌日の相場予想</span>
-        <span id="heading-date" class="h1-date"></span>
-      </h1>
-      <div class="meta">
-        <span id="meta-date">--</span>
-        <span id="updated-at" class="updated">更新: --:--</span>
-      </div>
     </header>
 
-    <!-- Tomorrow section -->
-    <section data-section="tomorrow">
-      <div class="status" id="predict-status">5分ごとに自動更新</div>
-      <div class="cards">
-        <div class="card">
-          <div class="row">
-            <div class="label">金 (K24)</div>
-            <div class="value">
-              <span id="gold-price" class="price">--</span>
-              <span id="gold-diff" class="diff">--</span>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="row">
-            <div class="label">プラチナ (Pt)</div>
-            <div class="value">
-              <span id="platinum-price" class="price">--</span>
-              <span id="platinum-diff" class="diff">--</span>
-            </div>
-          </div>
-        </div>
+    <!-- ページ共通の見出し・日付・更新時刻（app.jsが更新） -->
+    <h1>
+      <span id="heading-text">翌日の相場予想</span>
+      <small id="heading-date" style="font-weight:400; font-size:1rem; margin-left:8px;"></small>
+    </h1>
+    <div class="meta" id="updated-at">更新: --:--</div>
+
+    <!-- 翌日の相場予想 -->
+    <section data-section="tomorrow" class="show">
+      <div class="price-block">
+        <div class="label">金（K24）</div>
+        <div class="big" id="gold-price">--</div>
       </div>
-      <div class="status alert">データソース：Yahoo Finance（GC=F, PL=F, JPY=X）/ 円/グラム換算</div>
+      <div class="price-block">
+        <div class="label">プラチナ（Pt）</div>
+        <div class="big" id="platinum-price">--</div>
+      </div>
+      <p class="meta">データソース：Yahoo Finance（GC=F, PL=F, JPY=X）／円/グラム換算</p>
     </section>
 
-    <!-- Today section -->
-    <section data-section="today" style="display:none">
+    <!-- 本日の買取相場 -->
+    <section data-section="today">
       <div class="subtabs">
         <button class="subtab active" data-kind="dealer">業者向け</button>
         <button class="subtab" data-kind="retail">一般向け</button>
       </div>
-      <div class="status" id="today-status">毎朝 9:45 に自動更新（色石バンクの98%を表示）</div>
-      <table class="table">
+
+      <p class="meta">毎朝 9:45 に自動更新（色石バンクの98%を表示）</p>
+
+      <table>
         <thead>
-          <tr><th>カテゴリ</th><th>品位</th><th style="text-align:right">価格（円/g）</th></tr>
+          <tr>
+            <th>カテゴリ</th>
+            <th>品位</th>
+            <th>価格（円/g）</th>
+          </tr>
         </thead>
         <tbody id="today-tbody">
-          <!-- filled by JS -->
+          <tr><td colspan="3" style="text-align:center; color:#777;">読み込み中...</td></tr>
         </tbody>
       </table>
-      <div class="status alert">データソース：色石バンク（1日1回）</div>
+
+      <p class="meta" id="today-status"></p>
+      <p class="meta">データソース：色石バンク（1日1回）</p>
     </section>
 
-    <!-- Stones section (empty for now) -->
-    <section data-section="stones" style="display:none">
-      <div class="status">色石相場は準備中です。</div>
+    <!-- 色石相場（プレースホルダー） -->
+    <section data-section="stones">
+      <div class="card">
+        <div>色石相場は準備中です。</div>
+      </div>
     </section>
 
     <footer class="footer">© 宮善貴金属</footer>
   </div>
 
-  <script defer src="./app.js?v=3"></script>
+  <!-- JS（キャッシュ回避のため v= を増やしてOK） -->
+  <script defer src="./app.js?v=4"></script>
 </body>
 </html>
