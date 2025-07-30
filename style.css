@@ -1,60 +1,30 @@
 
-/* Base */
-body {
-  background-color: #0b0d10;
-  color: #e9eef5;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, Arial, sans-serif;
-  margin: 0;
-}
-.container { max-width: 960px; margin: 20px auto; padding: 0 16px; }
-
 /* Header */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: #0b0d10;
-  border-bottom: 1px solid #232a34;
+  background: #0f1115;
+  border-bottom: 1px solid #1f2a33;
+  backdrop-filter: saturate(140%) blur(6px);
 }
-.header-inner { 
-  max-width: 1100px; margin: 0 auto; padding: 12px 16px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+.header-inner {
+  max-width: 980px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
 }
-.brand { display: flex; align-items: center; }
-.logo { height: 40px; width: auto; display:block; }
-.header-tabs { display:flex; gap: 24px; }
-.pill-tab {
-  display: inline-block; padding: 10px 22px; border-radius: 999px;
-  border: 2px solid #8a8f98; text-decoration: none; color: #e9eef5;
-  font-weight: 800; letter-spacing: .5px;
+.brand { display: flex; align-items: center; gap: 10px; }
+.logo { height: 40px; width: auto; }
+.header-tabs { display: flex; gap: 8px; }
+.tab-link {
+  display: inline-block; padding: 8px 12px; border-radius: 999px;
+  text-decoration: none; font-weight: 600; font-size: 14px;
+  color: #b5c0cf; border: 1px solid #253043; background: #151a22;
 }
-.pill-tab.is-active, .pill-tab:hover { background: #12151a; border-color: #b6bbc4; }
+.tab-link:hover { color:#e9eef5; background:#1a2432; }
+.tab-link.is-active { color:#e9eef5; background:#1a2432; border-color:#2b3a50; }
 
-/* Head meta */
-.head h1 { margin: 8px 0 6px; font-size: 20px; }
+/* Head block */
+.container { max-width: 720px; margin: 0 auto; padding: 16px; color: #e9eef5; font-family: -apple-system, BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,Arial,sans-serif; }
+.head h1 { margin: 12px 0 6px; font-size: 20px; }
 .meta { color: #9aa8b5; font-size: 12px; display:flex; gap:12px; }
-
-/* Sub tabs (dealer/retail) */
-.sub-tabs { display: flex; gap: 8px; margin: 16px 0 12px; }
-.tab {
-  background: #151a22; color: #b5c0cf; border: 1px solid #253043;
-  padding: 8px 12px; border-radius: 999px; cursor: pointer;
-}
-.tab.active, .tab:hover { color: #e9eef5; background: #1a2432; }
-
-/* Cards */
-.card { background: #111622; border: 1px solid #243042; border-radius: 14px; padding: 14px; margin: 10px 0; }
-.card.info { color:#b7c4d6; font-size: 14px; }
-.row { display:flex; align-items: baseline; justify-content: space-between; gap:12px; }
-.label { color:#9aa8b5; }
-.value { display:flex; gap:12px; align-items: baseline; }
-.price { font-size: 36px; font-weight: 800; letter-spacing: .3px; }
-.diff { font-weight: 700; }
-.diff.up { color:#2fd276; } .diff.down { color:#ff6161; }
-.sub { margin-top:6px; color:#93a1b3; font-size:12px; }
-.note { font-size: 12px; color:#97a6b8; margin-top: 18px; line-height: 1.6; }
-
-/* Responsive */
-@media (max-width: 640px) {
-  .logo { height: 32px; }
-  .pill-tab { padding: 8px 14px; font-size: 14px; }
-  .price { font-size: 30px; }
-}
+.h1-date { margin-left: 10px; font-size: 16px; font-weight: 600; color: #b7c1cf; vertical-align: middle; }
+.updated { opacity: 0.9; }
