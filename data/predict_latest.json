@@ -1,0 +1,12 @@
+{
+  "generated_at": "2025-07-30T19:43:27.523957+09:00",
+  "note": "source: Yahoo Finance (GC=F, PL=F, JPY=X) → JPY/gram",
+  "gold": {
+    "price": 16124,
+    "diff": 287
+  },
+  "platinum": {
+    "price": 6800,
+    "diff": 110
+  }
+}
