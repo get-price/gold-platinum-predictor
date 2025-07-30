@@ -2,7 +2,7 @@ name: Today Market (09:45 JST)
 
 on:
   schedule:
-    - cron: "45 0 * * *"   # JST 09:45
+    - cron: "45 0 * * *"        # JST 09:45 = UTC 00:45
   workflow_dispatch:
 
 permissions:
@@ -25,14 +25,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml
 
-      - name: Ensure data dir exists
+      - name: Show workspace files (debug)
         run: |
-          mkdir -p data
+          pwd
+          ls -al
+          echo "----"
+          ls -al scripts || true
 
-   　  - name: Build today_market.json
-  run: |
-    mkdir -p data
-    python fetch_today_market.py   # ← scripts/ を外す
+      - name: Ensure data dir exists
+        run: mkdir -p data
+
+      # ★ここが肝心：リポジトリ直下にあるファイルを実行
+      #   もし scripts/ 配下に移動したなら下の行を「python scripts/fetch_today_market.py」に戻してください
+      - name: Build today_market.json
+        run: python fetch_today_market.py
 
       - name: Commit & push
         run: |
