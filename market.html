@@ -3,10 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>本日の金・プラチナ予測価格</title>
+  <title>宮善貴金属 | 相場</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- ===== Header: ロゴ + メインタブ（翌日/本日/色石） ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="assets/miyazen_logo.png" alt="宮善貴金属" class="logo" />
+      </div>
+      <nav class="header-tabs" role="tablist" aria-label="ページ切替">
+        <a href="#tomorrow" class="pill-tab" data-main="tomorrow" role="tab" aria-selected="true">翌日の相場予想</a>
+        <a href="#today" class="pill-tab is-active" data-main="today" role="tab" aria-selected="false">本日の買取相場</a>
+        <a href="#colored" class="pill-tab" data-main="colored" role="tab" aria-selected="false">色石相場</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="container">
     <header class="head">
       <h1>本日の金・プラチナ予測価格</h1>
@@ -16,37 +30,77 @@
       </div>
     </header>
 
-    <div class="tabs">
+    <!-- ===== サブタブ（本日の相場のみ表示：業者/一般） ===== -->
+    <div class="tabs sub-tabs" data-subtabs>
       <button class="tab active" data-kind="dealer">業者向け</button>
       <button class="tab" data-kind="retail">一般向け（3％減）</button>
     </div>
 
-    <div class="card">
-      <div class="row">
-        <div class="label">金 (K24)</div>
-        <div class="value">
-          <span id="gold-price" class="price">--</span>
-          <span id="gold-diff" class="diff">--</span>
+    <!-- ===== 本文（既存を維持）。data-sectionで表示制御 ===== -->
+    <div data-section="today">
+      <div class="card">
+        <div class="row">
+          <div class="label">金 (K24)</div>
+          <div class="value">
+            <span id="gold-price" class="price">--</span>
+            <span id="gold-diff" class="diff">--</span>
+          </div>
         </div>
+        <div class="sub">前日: <span id="gold-prev">--</span></div>
       </div>
-      <div class="sub">前日: <span id="gold-prev">--</span></div>
+
+      <div class="card">
+        <div class="row">
+          <div class="label">プラチナ (Pt)</div>
+          <div class="value">
+            <span id="platinum-price" class="price">--</span>
+            <span id="platinum-diff" class="diff">--</span>
+          </div>
+        </div>
+        <div class="sub">前日: <span id="platinum-prev">--</span></div>
+      </div>
+
+      <p class="note">
+        ※本ページの予測は5分ごとに自動更新されます。一般向けは業者向けの<strong>3％減（×0.97）</strong>で表示します。<br>
+        予測は翌日に向けて正確性が高まるよう設計されています。
+      </p>
     </div>
 
-    <div class="card">
-      <div class="row">
-        <div class="label">プラチナ (Pt)</div>
-        <div class="value">
-          <span id="platinum-price" class="price">--</span>
-          <span id="platinum-diff" class="diff">--</span>
-        </div>
+    <div data-section="tomorrow" style="display:none">
+      <div class="card info">
+        翌日の相場予想（業者向けのみを表示します）。<br/>
+        ※ データ取得・表示仕様は本日と同じですが、一般向けは表示しません。
       </div>
-      <div class="sub">前日: <span id="platinum-prev">--</span></div>
+
+      <!-- 本文と同じUIを使い、JS側で retail を無効にして dealer 固定で表示 -->
+      <div class="card">
+        <div class="row">
+          <div class="label">金 (K24) 予想</div>
+          <div class="value">
+            <span id="gold-price-tmr" class="price">--</span>
+            <span id="gold-diff-tmr" class="diff">--</span>
+          </div>
+        </div>
+        <div class="sub">前日: <span id="gold-prev-tmr">--</span></div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <div class="label">プラチナ (Pt) 予想</div>
+          <div class="value">
+            <span id="platinum-price-tmr" class="price">--</span>
+            <span id="platinum-diff-tmr" class="diff">--</span>
+          </div>
+        </div>
+        <div class="sub">前日: <span id="platinum-prev-tmr">--</span></div>
+      </div>
     </div>
 
-    <p class="note">
-      ※本ページの予測は5分ごとに自動更新されます。一般向けは業者向けの<strong>3％減（×0.97）</strong>で表示します。<br>
-      予測は翌日に向けて正確性が高まるよう設計されています。
-    </p>
+    <div data-section="colored" style="display:none">
+      <div class="card info">
+        色石相場のページ（準備中）。リンク先URLが決まり次第差し替えます。
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
