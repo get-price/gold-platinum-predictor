@@ -2,7 +2,7 @@ name: Today Market (09:45 JST)
 
 on:
   schedule:
-    - cron: "45 0 * * *"  # JST 09:45
+    - cron: "45 0 * * *"   # JST 09:45
   workflow_dispatch:
 
 permissions:
@@ -16,12 +16,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: |
+      - name: Install deps
+        run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 lxml
-      - run: python scripts/fetch_today_market.py
-      - run: |
-          git config user.name "github-actions[bot]"
+      - name: Build today_market.json
+        run: |
+          python fetch_today_market.py   # ← ここを修正
+      - name: Commit & push
+        run: |
+          git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/today_market.json
           git commit -m "chore: update today_market.json" || echo "no changes"
