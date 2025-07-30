@@ -1,82 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>翌日のAI相場予想 - 宮善貴金属</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Helvetica Neue', sans-serif;
-            text-align: center;
-            padding: 2rem;
-        }
-        header img {
-            width: 160px;
-            margin-bottom: 1rem;
-        }
-        nav {
-            margin-bottom: 2rem;
-        }
-        nav a {
-            display: inline-block;
-            margin: 0 0.5rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #fff;
-            border-radius: 2rem;
-            text-decoration: none;
-            color: #fff;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin: 1rem 0 0.5rem;
-        }
-        .date {
-            font-size: 1.2rem;
-            color: #ccc;
-        }
-        .price-box {
-            margin: 2rem auto;
-            padding: 1.5rem;
-            border: 2px solid #888;
-            width: fit-content;
-            text-align: left;
-        }
-        .price-box p {
-            font-size: 1.5rem;
-            margin: 1rem 0;
-        }
-        .up { color: #00ff99; }
-        .down { color: #ff4444; }
-        .note {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>本日の貴金属買取相場 × 明日のAI予測</title>
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-    <header>
-        <img src="img/logo.png" alt="宮善貴金属ロゴ">
-    </header>
-    <nav>
-        <a href="#">翌日の相場予想</a>
-        <a href="#">本日の買取相場</a>
-        <a href="#">色石相場</a>
+  <header class="header">
+    <div class="brand">GO Metals</div>
+    <nav class="nav">
+      <a href="#" class="nav-link active" id="tab-today">本日の貴金属買取相場</a>
+      <a href="#" class="nav-link" id="tab-tomorrow">明日のAI予測相場</a>
     </nav>
-    <main>
-        <h1>翌日のAI相場予想</h1>
-        <p class="date">2025年◯月◯日（月）</p>
-        <div class="price-box">
-            <p>金価格（K24IG）：17,250円　<span class="up">（＋124円）</span></p>
-            <p>プラチナ価格（Pt1000IG）：7,250円　<span class="down">（−54円）</span></p>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="tabs">
+        <button class="tab-button active" data-kind="dealer">業者向け</button>
+        <button class="tab-button" data-kind="retail">一般向け</button>
+      </div>
+
+      <div id="updatedAt" class="updated">更新: --</div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-title">金 (K24)</div>
+          <div class="price-row">
+            <span id="gold-price" class="price">--</span>
+            <span id="gold-diff" class="diff">--</span>
+          </div>
+          <div class="sub">前日: <span id="gold-prev">--</span></div>
         </div>
-        <p class="note">
-            ※本ページに表示されている相場予測は、最新の市場データに基づいており、<br>
-            5分ごとに自動更新されます。予測は翌日に向けて正確性が高まるよう設計されています。
-        </p>
-    </main>
+
+        <div class="card">
+          <div class="card-title">プラチナ (Pt)</div>
+          <div class="price-row">
+            <span id="platinum-price" class="price">--</span>
+            <span id="platinum-diff" class="diff">--</span>
+          </div>
+          <div class="sub">前日: <span id="platinum-prev">--</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© GO Inc.</div>
+    <div id="dow">曜日: --</div>
+  </footer>
+
+  <script src="assets/script.js"></script>
 </body>
 </html>

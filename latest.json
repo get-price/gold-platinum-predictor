@@ -1,0 +1,24 @@
+{
+  "generated_at": null,
+  "note": "GitHub Actions が5分ごとに更新します。dealer=業者向け, retail=一般向け(5%減)。価格は円/グラム。",
+  "gold": {
+    "dealer": {
+      "price_jpy_g": null,
+      "prev_jpy_g": null
+    },
+    "retail": {
+      "price_jpy_g": null,
+      "prev_jpy_g": null
+    }
+  },
+  "platinum": {
+    "dealer": {
+      "price_jpy_g": null,
+      "prev_jpy_g": null
+    },
+    "retail": {
+      "price_jpy_g": null,
+      "prev_jpy_g": null
+    }
+  }
+}
