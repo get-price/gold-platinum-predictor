@@ -1,11 +1,7 @@
 # fetch_today_market.py
 # 色石バンクの相場を取得して、data/today_market.json を生成
-# - gold     : K24, K22, K21.6, K20, K18, K14, K12, K10, K9, K18WG, K14WG
-# - platinum : PT1000, PT950, PT900, PT850
-# - palladium: PD1000
-# - combo    : 代表的な金×Ptのコンビ
-# - silver   : SV1000, SV950, SV925
-# さらに、田中貴金属の「店頭買取価格（税込）」×0.99（Au/Pt/Ag）を ingot_tanaka に追加
+# - gold / platinum / palladium / combo / silver
+# さらに田中貴金属の「店頭買取価格（税込）」×0.99（Au/Pt/Ag）を ingot_tanaka に追加
 #
 # dealer = round(source * 0.98)
 # general = round(dealer * 0.97)
@@ -22,22 +18,20 @@ IROISHI_URL = "https://iroishi-bank.jp/market/"
 TANAKA_URL = "https://gold.tanaka.co.jp/index.php"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+    "User-Agent": (
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+    )
 }
 
-# -------------------------
-# 共通ユーティリティ
-# -------------------------
+# ========== 共通ユーティリティ ==========
 def to_int(text: str) -> int:
-    """整数のみ（カンマ・円を除去）"""
     if text is None:
         return 0
     t = re.sub(r"[^\d]", "", str(text))
     return int(t) if t.isdigit() else 0
 
 def to_float(text: str) -> float:
-    """小数対応（カンマ・円を除去）"""
     if text is None:
         return 0.0
     t = re.sub(r"[^\d\.]", "", str(text))
@@ -53,26 +47,18 @@ def jst_now_iso() -> str:
 def ensure_dir(path: str) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
-# -------------------------
-# 色石バンク側の解析
-# -------------------------
+# ========== 色石バンク：解析 ==========
 def nearest_heading_text(tbl) -> str:
-    """テーブル直前の見出しテキスト（カテゴリ判定用）"""
     h = tbl.find_previous(["h1", "h2", "h3", "h4", "h5"])
     return (h.get_text(strip=True) if h else "").replace("\u3000", " ")
 
 def detect_category(heading_text: str) -> str | None:
     ht = heading_text
-    if any(k in ht for k in ["金", "ゴールド"]):
-        return "gold"
-    if any(k in ht for k in ["プラチナ", "白金"]):
-        return "platinum"
-    if any(k in ht for k in ["パラジウム"]):
-        return "palladium"
-    if any(k in ht for k in ["シルバー", "銀"]):
-        return "silver"
-    if any(k in ht for k in ["コンビ"]):
-        return "combo"
+    if any(k in ht for k in ["金", "ゴールド"]):       return "gold"
+    if any(k in ht for k in ["プラチナ", "白金"]):      return "platinum"
+    if any(k in ht for k in ["パラジウム"]):           return "palladium"
+    if any(k in ht for k in ["シルバー", "銀"]):       return "silver"
+    if any(k in ht for k in ["コンビ"]):               return "combo"
     return None
 
 def label_norm(s: str) -> str:
@@ -84,7 +70,6 @@ def label_norm(s: str) -> str:
     return t
 
 def parse_table_to_items(tbl) -> list[tuple[str, int]]:
-    """テーブル → (label, source) の配列"""
     items = []
     trs = tbl.find_all("tr")
     for tr in trs:
@@ -103,7 +88,6 @@ def build_record(label: str, source: int, d_factor: float, g_factor: float) -> d
     return {"label": label, "source": source, "dealer": dealer, "general": general}
 
 def scrape_iroishi() -> dict:
-    """色石バンクから sections を作る"""
     r = requests.get(IROISHI_URL, headers=HEADERS, timeout=20)
     r.raise_for_status()
     soup = BeautifulSoup(r.text, "lxml")
@@ -120,93 +104,97 @@ def scrape_iroishi() -> dict:
         if not cat:
             continue
         for label, price in parse_table_to_items(tbl):
-            if cat == "gold" and not label.startswith("K"):
-                continue
-            if cat == "platinum" and not label.startswith("PT"):
-                continue
-            if cat == "palladium" and not label.startswith("PD"):
-                continue
-            if cat == "silver" and not label.startswith("SV"):
-                continue
+            if cat == "gold"      and not label.startswith("K"):  continue
+            if cat == "platinum"  and not label.startswith("PT"): continue
+            if cat == "palladium" and not label.startswith("PD"): continue
+            if cat == "silver"    and not label.startswith("SV"): continue
             sections[cat].append(build_record(label, price, dealer_factor, general_factor))
 
     return sections
 
-# -------------------------
-# 田中貴金属：店頭買取価格（税込）×99%
-# -------------------------
+# ========== 田中貴金属：店頭買取価格（税込）×99% ==========
+def _collect_prices_nearby(scope) -> list[float]:
+    vals = []
+    for t in scope.find_all(string=re.compile(r"[\d,]+(?:\.\d+)?\s*円")):
+        v = to_float(t)
+        if v > 0:
+            vals.append(v)
+    return vals
+
+def _find_labeled_prices(scope) -> dict:
+    labels = {
+        "Au": re.compile(r"(金|ゴールド)"),
+        "Pt": re.compile(r"(プラチナ|白金)"),
+        "Ag": re.compile(r"(銀|シルバー)"),
+    }
+    out: dict[str, float] = {}
+    for metal, rx in labels.items():
+        cand = None
+        for tag in scope.find_all(string=rx):
+            cand = tag
+            break
+        if not cand:
+            continue
+        row = cand.find_parent(["tr", "li", "p", "div"]) or scope
+        prices = _collect_prices_nearby(row) or _collect_prices_nearby(scope)
+        if prices:
+            out[metal] = prices[0]
+    return out
+
 def fetch_tanaka_ingot() -> dict | None:
-    """
-    田中貴金属のトップページから「店頭買取価格（税込）」の
-    金/プラチナ/銀の数値を拾い、0.99 を掛けた値を返す。
-    失敗時は None。
-    """
     try:
         r = requests.get(TANAKA_URL, headers=HEADERS, timeout=20)
         r.raise_for_status()
         s = BeautifulSoup(r.text, "lxml")
 
-        # 「店頭買取価格（税込）」というテキストを含む要素を探す
         anchor = None
         for tag in s.find_all(string=re.compile(r"店頭買取価格.*税込")):
             anchor = tag
             break
 
-        # 近傍から金額を広めに抽出（フォールバック込み）
-        nums: list[float] = []
-        def collect_numbers(scope):
-            tmp = []
-            for t in scope.find_all(string=re.compile(r"[\d,]+(?:\.\d+)?\s*円")):
-                v = to_float(t)
-                if v > 0:
-                    tmp.append(v)
-            return tmp
-
+        vals: dict[str, float] = {}
         if anchor:
-            box = anchor.find_parent(["tr", "table", "div"]) or s
-            nums = collect_numbers(box)
+            box = anchor.find_parent(["table", "div", "section", "tr"]) or s
+            vals = _find_labeled_prices(box)
 
-        if len(nums) < 3:  # ページ構造変更に備え、全体からも拾う
-            nums = collect_numbers(s)
+        if len(vals) < 3:  # 足りない時は全体からも抽出して補完
+            near = _collect_prices_nearby(s)
+            if near:
+                near = sorted(near, reverse=True)
+                rank = {"Au": None, "Pt": None, "Ag": None}
+                for i, m in enumerate(["Au", "Pt", "Ag"]):
+                    if m not in vals and i < len(near):
+                        rank[m] = near[i]
+                for k, v in rank.items():
+                    if k not in vals and v:
+                        vals[k] = v
 
-        if len(nums) < 3:
+        if not all(k in vals for k in ["Au", "Pt", "Ag"]):
             return None
-
-        # 大きい順で上位3つを金/プラチナ/銀とみなす
-        nums = sorted(nums, reverse=True)
-        au, pt, ag = nums[0], nums[1], nums[2]
 
         def adj(x: float) -> float | int:
             y = x * 0.99
-            # 金/白金は整数円、銀は小数ありのことが多い（閾値を500円で分岐）
             return round(y) if x >= 500 else round(y, 2)
 
-        return {
-            "source": TANAKA_URL,
-            "policy": "retail_buy_price * 0.99",
-            "items": [
-                {"metal": "Au", "label": "金インゴット",       "price": adj(au)},
-                {"metal": "Pt", "label": "プラチナインゴット", "price": adj(pt)},
-                {"metal": "Ag", "label": "銀インゴット",       "price": adj(ag)},
-            ],
-        }
+        items = [
+            {"metal": "Au", "label": "金インゴット",       "price": adj(vals["Au"])},
+            {"metal": "Pt", "label": "プラチナインゴット", "price": adj(vals["Pt"])},
+            {"metal": "Ag", "label": "銀インゴット",       "price": adj(vals["Ag"])},
+        ]
+        return {"source": TANAKA_URL, "policy": "retail_buy_price * 0.99", "items": items}
     except Exception:
         return None
 
-# -------------------------
-# 全体の組み立て
-# -------------------------
+# ========== 全体の組み立て ==========
 def scrape() -> dict:
     sections = scrape_iroishi()
-
     payload = {
         "date": datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d"),
         "generated_at": jst_now_iso(),
         "source": IROISHI_URL,
         "policy": {"dealer_factor": 0.98, "general_factor": 0.97},
         "sections": sections,
-        # 田中貴金属のインゴット（×99%）を添える
-        "ingot_tanaka": fetch_tanaka_ingot(),
+        "ingot_tanaka": fetch_tanaka_ingot(),  # ← 追加
     }
     return payload
 
