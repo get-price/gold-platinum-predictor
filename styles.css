@@ -78,3 +78,28 @@ body {
 
 /* Footer */
 .footer { color:#9aa8b5; font-size: 12px; padding: 16px; text-align:center; border-top:1px solid #1f2a33; margin-top: 24px; }
+/* ========== 田中インゴットカード ========== */
+#ingot-row {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ingot-card {
+  background: #f4f4f4;
+  border-radius: 6px;
+  text-align: center;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.ingot-card .label {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.ingot-card .price {
+  font-size: 16px;
+  margin-top: 2px;
+}
