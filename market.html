@@ -1,136 +1,82 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>宮善貴金属 | 相場</title>
-
-  <!-- 既存CSS（あればこのままでOK） -->
-  <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./style.css" />
-
-  <!-- インゴットカード用の最小スタイル（このままでもOK。後でstyles.cssに移してもOK） -->
-  <style>
-    .ingot-cards{
-      display:none;
-      grid-template-columns: repeat(3,1fr);
-      gap:10px;
-      margin:12px 0 16px;
-    }
-    .ingot-card{
-      border:1px solid #e3e3e3;
-      border-radius:10px;
-      background:#fff;
-      padding:10px 12px;
-      box-shadow: 0 1px 2px rgba(0,0,0,.04);
-    }
-    .ingot-card .ingot-label{ font-size:.92rem; color:#666; }
-    .ingot-card .ingot-price{
-      margin-top:6px;
-      font-size: clamp(20px, 4.5vw, 28px);
-      font-weight:800;
-      letter-spacing:.01em;
-      font-variant-numeric: tabular-nums;
-    }
-    @media (max-width:560px){ .ingot-cards{ grid-template-columns:1fr; } }
-
-    .diff{ margin-left:.5rem; font-weight:700; }
-    .diff.up{ color:#18a957; }
-    .diff.down{ color:#e34d4d; }
-    .table td, .table th{ padding:10px 12px; }
-    .table tr:hover{ background:#fafafa; }
-  </style>
-</head>
-<body>
-  <!-- ヘッダ -->
-  <header class="site-header" style="padding:8px 12px;">
-    <div class="header-inner" style="display:flex;align-items:center;gap:12px;">
-      <img src="./miyazen_logo.png" alt="宮善貴金属" style="height:32px;" />
-      <nav class="header-tabs" role="tablist" aria-label="相場タブ" style="display:flex;gap:12px;">
-       <a href="#tomorrow" class="tab-link" role="tab" aria-selected="false">翌日の相場予想</a>
-<a href="#today" class="tab-link is-active" role="tab" aria-selected="true">本日の買取相場</a>
-        <a href="#stones" class="tab-link" role="tab" aria-selected="false">色石相場</a>
-      </nav>
-    </div>
-  </header>
-
-  <div class="container" style="padding:12px;">
-    <header class="head">
-      <h1 style="margin:.2em 0;">
-        <span id="heading-text">翌日の相場予想</span>
-        <span id="heading-date" class="h1-date"></span>
-      </h1>
-      <div class="meta" style="color:#666">
-        <span id="meta-date">--</span>
-        <span id="updated-at" class="updated">更新: --:--</span>
-      </div>
-    </header>
-
-    <!-- 翌日の相場予想 -->
-    <section data-section="tomorrow">
-      <div class="status" id="predict-status">5分ごとに自動更新</div>
-      <div class="cards" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0 16px;">
-        <div class="card" style="border:1px solid #e3e3e3;border-radius:10px;padding:10px 12px;">
-          <div class="row" style="display:flex;justify-content:space-between;align-items:baseline;">
-            <div class="label">金 (K24)</div>
-            <div class="value">
-              <span id="gold-price" class="price">--</span>
-              <span id="gold-diff" class="diff"></span>
-            </div>
-          </div>
-        </div>
-        <div class="card" style="border:1px solid #e3e3e3;border-radius:10px;padding:10px 12px;">
-          <div class="row" style="display:flex;justify-content:space-between;align-items:baseline;">
-            <div class="label">プラチナ (Pt)</div>
-            <div class="value">
-              <span id="platinum-price" class="price">--</span>
-              <span id="platinum-diff" class="diff"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 本日の買取相場 -->
-    <section data-section="today" style="display:block">
-      <!-- ★ 田中インゴット ×99%（あるときだけ表示されます） -->
-      <div id="ingot-row" class="ingot-cards">
-        <div class="ingot-card">
-          <div class="ingot-label">金インゴット</div>
-          <div class="ingot-price"><span id="ingot-au">--</span></div>
-        </div>
-        <div class="ingot-card">
-          <div class="ingot-label">プラチナインゴット</div>
-          <div class="ingot-price"><span id="ingot-pt">--</span></div>
-        </div>
-        <div class="ingot-card">
-          <div class="ingot-label">銀インゴット</div>
-          <div class="ingot-price"><span id="ingot-ag">--</span></div>
-        </div>
-      </div>
-
-      <div class="subtabs" style="margin:8px 0;">
-        <button class="subtab active" data-kind="dealer">業者向け</button>
-        <button class="subtab" data-kind="retail">一般向け</button>
-      </div>
-
-      <div class="status" id="today-status">毎朝 9:45 に自動更新</div>
-      <table class="table" style="width:100%;border-collapse:collapse;margin-top:8px;">
-        <thead>
-          <tr><th>カテゴリ</th><th>品位</th><th style="text-align:right">価格（円/g）</th></tr>
-        </thead>
-        <tbody id="today-tbody"></tbody>
-      </table>
-    </section>
-
-    <!-- 色石 -->
-    <section data-section="stones" style="display:none">
-      <div class="status">色石相場は準備中です。</div>
-    </section>
-
-    <footer class="footer" style="margin-top:28px;color:#555;">© 宮善貴金属</footer>
+<!-- === 貴金属相場表示レイアウト === -->
+<section data-section="today" style="display:block">
+  <div class="subtabs" style="margin:8px 0;">
+    <button class="subtab active" data-kind="dealer">業者向け</button>
+    <button class="subtab" data-kind="general">一般向け</button>
   </div>
 
-  <script src="./script.js?v=12" defer></script>
-</body>
-</html>
+  <div class="status" id="today-status">毎朝 9:45 に自動更新</div>
+
+  <!-- ★ 田中インゴット ×98% ×97% 表示 -->
+  <div id="ingot-row" class="ingot-cards">
+    <div class="ingot-card">
+      <div class="ingot-label">金インゴット</div>
+      <div class="ingot-price"><span id="ingot-au">--</span></div>
+    </div>
+    <div class="ingot-card">
+      <div class="ingot-label">プラチナインゴット</div>
+      <div class="ingot-price"><span id="ingot-pt">--</span></div>
+    </div>
+    <div class="ingot-card">
+      <div class="ingot-label">銀インゴット</div>
+      <div class="ingot-price"><span id="ingot-ag">--</span></div>
+    </div>
+  </div>
+
+  <!-- ▼ 表形式のカテゴリ別相場テーブルをここに生成 -->
+  <div id="today-market-tables"></div>
+</section>
+
+<script>
+function renderTodayTable() {
+  if (!todayData) return;
+  const container = document.querySelector('#today-market-tables');
+  if (!container) return;
+
+  const kind = currentKind;
+  container.innerHTML = '';
+
+  const categories = {
+    gold: '金',
+    platinum: 'プラチナ',
+    combo: '金・プラチナコンビ',
+    silver: 'シルバー'
+  };
+
+  const fmt = (n) => Number(n).toLocaleString() + ' 円';
+
+  for (const [cat, label] of Object.entries(categories)) {
+    const items = todayData.sections[cat] || [];
+    if (items.length === 0) continue;
+
+    const table = document.createElement('table');
+    table.className = 'table';
+    table.style = 'width:100%;border-collapse:collapse;margin:16px 0;';
+    table.innerHTML = `
+      <thead>
+        <tr><th colspan="2" style="text-align:left;font-size:1.1em">${label}</th></tr>
+        <tr><th>品位</th><th style="text-align:right">${kind === 'dealer' ? '業者向け' : '一般向け'}価格</th></tr>
+      </thead>
+      <tbody>
+        ${items.map(it => `
+          <tr>
+            <td>${it.label}</td>
+            <td style="text-align:right">${fmt(it[kind] ?? 0)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    `;
+
+    container.appendChild(table);
+  }
+
+  // 更新時刻の表示
+  const tstat = document.querySelector('#today-status');
+  if (tstat && todayData.generated_at) {
+    const dt = new Date(todayData.generated_at);
+    const hh = String(dt.getHours()).padStart(2,'0');
+    const mm = String(dt.getMinutes()).padStart(2,'0');
+    tstat.textContent = `更新: ${hh}:${mm}`;
+  }
+}
+</script>
