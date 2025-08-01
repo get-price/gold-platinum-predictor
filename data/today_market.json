@@ -1,50 +1,54 @@
-def fetch_tanaka_ingot() -> dict | None:
-    try:
-        r = requests.get("https://gold.tanaka.co.jp/index.php", headers=HEADERS, timeout=20)
-        r.raise_for_status()
-        s = BeautifulSoup(r.text, "lxml")
-
-        vals = {}
-
-        # 金・プラチナ・銀の買取価格（税込）をそれぞれ抽出
-        price_blocks = {
-            "Au": "金買取価格（税込）",
-            "Pt": "プラチナ買取価格（税込）",
-            "Ag": "パラジウム"  # ← 銀の代わりに銀がないケースも多いため暫定で
-        }
-
-        for metal, label in price_blocks.items():
-            tag = s.find(string=re.compile(label))
-            if tag:
-                box = tag.find_parent(["div", "td", "tr"]) or s
-                price_txt = box.find(string=re.compile(r"[\\d,]+円"))
-                if price_txt:
-                    val = to_int(str(price_txt))
-                    if val:
-                        vals[metal] = val
-
-        if "Au" not in vals and "Pt" not in vals:
-            return None  # 最低限 金かプラチナどちらか無いと意味がない
-
-        items = []
-        for metal, source in vals.items():
-            dealer = round(source * 0.98)
-            general = round(dealer * 0.97)
-            label = "金インゴット" if metal == "Au" else "プラチナインゴット" if metal == "Pt" else "銀インゴット"
-            items.append({
-                "metal": metal,
-                "label": label,
-                "source": source,
-                "dealer": dealer,
-                "general": general
-            })
-
-        return {
-            "source": TANAKA_URL,
-            "policy": "retail_buy_price * 0.98 * 0.97",
-            "items": items
-        }
-
-    except Exception as e:
-        print(f"[ERROR] fetch_tanaka_ingot(): {e}")
-        return None
+{
+  "date": "2025-08-01",
+  "generated_at": "2025-08-01T13:40:01.051054+09:00",
+  "source": "https://iroishi-bank.jp/market/",
+  "policy": {
+    "dealer_factor": 0.98,
+    "general_factor": 0.97
+  },
+  "sections": {
+    "gold": [],
+    "platinum": [
+      {
+        "label": "PT1000",
+        "source": 6531,
+        "dealer": 6400,
+        "general": 6208
+      },
+      {
+        "label": "PT950",
+        "source": 6187,
+        "dealer": 6063,
+        "general": 5881
+      },
+      {
+        "label": "PT900",
+        "source": 6409,
+        "dealer": 6281,
+        "general": 6093
+      },
+      {
+        "label": "PT850",
+        "source": 6066,
+        "dealer": 5945,
+        "general": 5767
+      },
+      {
+        "label": "PT900ベース/K18コンビ(9:1)",
+        "source": 6646,
+        "dealer": 6513,
+        "general": 6318
+      },
+      {
+        "label": "PT850ベース/K18コンビ(9:1)",
+        "source": 6338,
+        "dealer": 6211,
+        "general": 6025
+      }
+    ],
+    "palladium": [],
+    "combo": [],
+    "silver": []
+  },
+  "ingot_tanaka": null
+}
