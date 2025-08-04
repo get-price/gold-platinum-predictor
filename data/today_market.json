@@ -1,6 +1,6 @@
 {
-  "date": "2025-08-03",
-  "generated_at": "2025-08-03T13:33:06.126689+09:00",
+  "date": "2025-08-04",
+  "generated_at": "2025-08-04T13:43:42.076685+09:00",
   "source": "https://iroishi-bank.jp/market/",
   "policy": {
     "dealer_factor": 0.98,
@@ -11,39 +11,39 @@
     "platinum": [
       {
         "label": "PT1000",
-        "source": 6531,
-        "dealer": 6400,
-        "general": 6208
+        "source": 6486,
+        "dealer": 6356,
+        "general": 6165
       },
       {
         "label": "PT950",
-        "source": 6187,
-        "dealer": 6063,
-        "general": 5881
+        "source": 6145,
+        "dealer": 6022,
+        "general": 5841
       },
       {
         "label": "PT900",
-        "source": 6409,
-        "dealer": 6281,
-        "general": 6093
+        "source": 6368,
+        "dealer": 6241,
+        "general": 6054
       },
       {
         "label": "PT850",
-        "source": 6066,
-        "dealer": 5945,
-        "general": 5767
+        "source": 6027,
+        "dealer": 5906,
+        "general": 5729
       },
       {
         "label": "PT900ベース/K18コンビ(9:1)",
-        "source": 6646,
-        "dealer": 6513,
-        "general": 6318
+        "source": 6607,
+        "dealer": 6475,
+        "general": 6281
       },
       {
         "label": "PT850ベース/K18コンビ(9:1)",
-        "source": 6338,
-        "dealer": 6211,
-        "general": 6025
+        "source": 6301,
+        "dealer": 6175,
+        "general": 5990
       }
     ],
     "palladium": [],
