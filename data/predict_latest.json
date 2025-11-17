@@ -1,12 +1,12 @@
 {
-  "generated_at": "2025-11-18T04:16:43.143160+09:00",
+  "generated_at": "2025-11-18T04:29:19.405858+09:00",
   "note": "fallback=GC/PL(USD)×JPY→JPY/gram",
   "gold": {
-    "price": 20251,
+    "price": 20272,
     "diff": 0
   },
   "platinum": {
-    "price": 7716,
+    "price": 7726,
     "diff": 0
   }
 }
