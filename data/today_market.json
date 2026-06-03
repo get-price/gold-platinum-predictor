@@ -1,6 +1,6 @@
 {
-  "date": "2026-06-02",
-  "generated_at": "2026-06-02T14:15:06.218349+09:00",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03T14:31:09.245470+09:00",
   "source": "https://iroishi-bank.jp/market/",
   "policy": {
     "dealer_factor": 0.98,
@@ -35,51 +35,51 @@
       },
       {
         "label": "PT900ベース/K18コンビ(9:1)",
-        "source": 10328,
-        "dealer": 10121,
-        "general": 9817
+        "source": 10327,
+        "dealer": 10120,
+        "general": 9816
       },
       {
         "label": "PT850ベース/K18コンビ(9:1)",
-        "source": 9848,
-        "dealer": 9651,
-        "general": 9361
+        "source": 9846,
+        "dealer": 9649,
+        "general": 9360
       },
       {
         "label": "PT900ベース/K18コンビ(8:2)",
-        "source": 11454,
-        "dealer": 11225,
-        "general": 10888
+        "source": 11451,
+        "dealer": 11222,
+        "general": 10885
       },
       {
         "label": "PT850ベース/K18コンビ(8:2)",
-        "source": 11027,
-        "dealer": 10806,
-        "general": 10482
+        "source": 11025,
+        "dealer": 10804,
+        "general": 10480
       },
       {
         "label": "PT900ベース/K18コンビ(7:3)",
-        "source": 12380,
-        "dealer": 12132,
-        "general": 11768
+        "source": 12376,
+        "dealer": 12128,
+        "general": 11764
       },
       {
         "label": "PT850ベース/K18コンビ(7:3)",
-        "source": 12007,
-        "dealer": 11767,
-        "general": 11414
+        "source": 12003,
+        "dealer": 11763,
+        "general": 11410
       },
       {
         "label": "PT900ベース/K18コンビ(6:4)",
-        "source": 13306,
-        "dealer": 13040,
-        "general": 12649
+        "source": 13301,
+        "dealer": 13035,
+        "general": 12644
       },
       {
         "label": "PT850ベース/K18コンビ(6:4)",
-        "source": 12986,
-        "dealer": 12726,
-        "general": 12344
+        "source": 12981,
+        "dealer": 12721,
+        "general": 12339
       }
     ],
     "palladium": [],
