@@ -1,6 +1,6 @@
 {
-  "date": "2026-07-27",
-  "generated_at": "2026-07-27T13:26:18.869758+09:00",
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28T12:50:41.356137+09:00",
   "source": "https://iroishi-bank.jp/market/",
   "policy": {
     "dealer_factor": 0.98,
@@ -35,51 +35,51 @@
       },
       {
         "label": "PT900ベース/K18コンビ(9:1)",
-        "source": 8955,
-        "dealer": 8776,
-        "general": 8513
+        "source": 8944,
+        "dealer": 8765,
+        "general": 8502
       },
       {
         "label": "PT850ベース/K18コンビ(9:1)",
-        "source": 8545,
-        "dealer": 8374,
-        "general": 8123
+        "source": 8534,
+        "dealer": 8363,
+        "general": 8112
       },
       {
         "label": "PT900ベース/K18コンビ(8:2)",
-        "source": 10096,
-        "dealer": 9894,
-        "general": 9597
+        "source": 10074,
+        "dealer": 9873,
+        "general": 9577
       },
       {
         "label": "PT850ベース/K18コンビ(8:2)",
-        "source": 9731,
-        "dealer": 9536,
-        "general": 9250
+        "source": 9709,
+        "dealer": 9515,
+        "general": 9230
       },
       {
         "label": "PT900ベース/K18コンビ(7:3)",
-        "source": 11036,
-        "dealer": 10815,
-        "general": 10491
+        "source": 11003,
+        "dealer": 10783,
+        "general": 10460
       },
       {
         "label": "PT850ベース/K18コンビ(7:3)",
-        "source": 10717,
-        "dealer": 10503,
-        "general": 10188
+        "source": 10684,
+        "dealer": 10470,
+        "general": 10156
       },
       {
         "label": "PT900ベース/K18コンビ(6:4)",
-        "source": 11977,
-        "dealer": 11737,
-        "general": 11385
+        "source": 11933,
+        "dealer": 11694,
+        "general": 11343
       },
       {
         "label": "PT850ベース/K18コンビ(6:4)",
-        "source": 11703,
-        "dealer": 11469,
-        "general": 11125
+        "source": 11659,
+        "dealer": 11426,
+        "general": 11083
       }
     ],
     "palladium": [],
