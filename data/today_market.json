@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-13",
-  "generated_at": "2026-09-13T14:21:31.359053+09:00",
+  "date": "2026-09-14",
+  "generated_at": "2026-09-14T14:26:36.733755+09:00",
   "source": "https://iroishi-bank.jp/market/",
   "policy": {
     "dealer_factor": 0.98,
@@ -11,75 +11,75 @@
     "platinum": [
       {
         "label": "PT1000",
-        "source": 9124,
-        "dealer": 8942,
-        "general": 8674
+        "source": 9111,
+        "dealer": 8929,
+        "general": 8661
       },
       {
         "label": "PT950",
-        "source": 8648,
-        "dealer": 8475,
-        "general": 8221
+        "source": 8636,
+        "dealer": 8463,
+        "general": 8209
       },
       {
         "label": "PT900",
-        "source": 8782,
-        "dealer": 8606,
-        "general": 8348
+        "source": 8771,
+        "dealer": 8596,
+        "general": 8338
       },
       {
         "label": "PT850",
-        "source": 8307,
-        "dealer": 8141,
-        "general": 7897
+        "source": 8296,
+        "dealer": 8130,
+        "general": 7886
       },
       {
         "label": "PT900ベース/K18コンビ(9:1)",
-        "source": 9240,
-        "dealer": 9055,
-        "general": 8783
+        "source": 9226,
+        "dealer": 9041,
+        "general": 8770
       },
       {
         "label": "PT850ベース/K18コンビ(9:1)",
-        "source": 8813,
-        "dealer": 8637,
-        "general": 8378
+        "source": 8799,
+        "dealer": 8623,
+        "general": 8364
       },
       {
         "label": "PT900ベース/K18コンビ(8:2)",
-        "source": 10340,
-        "dealer": 10133,
-        "general": 9829
+        "source": 10324,
+        "dealer": 10118,
+        "general": 9814
       },
       {
         "label": "PT850ベース/K18コンビ(8:2)",
-        "source": 9960,
-        "dealer": 9761,
-        "general": 9468
+        "source": 9945,
+        "dealer": 9746,
+        "general": 9454
       },
       {
         "label": "PT900ベース/K18コンビ(7:3)",
-        "source": 11239,
-        "dealer": 11014,
-        "general": 10684
+        "source": 11222,
+        "dealer": 10998,
+        "general": 10668
       },
       {
         "label": "PT850ベース/K18コンビ(7:3)",
-        "source": 10908,
-        "dealer": 10690,
-        "general": 10369
+        "source": 10890,
+        "dealer": 10672,
+        "general": 10352
       },
       {
         "label": "PT900ベース/K18コンビ(6:4)",
-        "source": 12139,
-        "dealer": 11896,
-        "general": 11539
+        "source": 12119,
+        "dealer": 11877,
+        "general": 11521
       },
       {
         "label": "PT850ベース/K18コンビ(6:4)",
-        "source": 11855,
-        "dealer": 11618,
-        "general": 11269
+        "source": 11835,
+        "dealer": 11598,
+        "general": 11250
       }
     ],
     "palladium": [],
